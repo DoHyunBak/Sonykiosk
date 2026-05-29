@@ -313,33 +313,6 @@ export function WhySonyPage() {
         className="h-full flex flex-col overflow-hidden"
         style={{ padding: "8px 40px 32px" }}
       >
-        {/* Header */}
-        <div className="flex-shrink-0 mb-5">
-          <h1
-            style={{
-              fontSize: "48px",
-              fontWeight: "800",
-              letterSpacing: "-0.02em",
-              color: "#ffffff",
-              fontFamily: "var(--font-headline)",
-              lineHeight: "1.2",
-              marginBottom: "6px",
-            }}
-          >
-            왜 소니 알파인가요?
-          </h1>
-          <p
-            style={{
-              fontSize: "20px",
-              color: "rgba(255,255,255,0.6)",
-              fontFamily: "var(--font-body)",
-              fontWeight: "400",
-            }}
-          >
-            스마트폰과의 차이를 직접 눈으로 확인하세요
-          </p>
-        </div>
-
         {/* Tab Buttons */}
         <div className="grid grid-cols-4 gap-3 mb-5 flex-shrink-0">
           {tabs.map((tab) => {
