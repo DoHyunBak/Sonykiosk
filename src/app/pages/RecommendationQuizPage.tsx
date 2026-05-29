@@ -156,7 +156,7 @@ export function RecommendationQuizPage() {
   const portabilityLabel =
     portability <= 3
       ? "성능 중심"
-      : portability >= 7
+      : portability >= 6
       ? "휴대성 중심"
       : "균형 중시";
 
@@ -247,12 +247,12 @@ export function RecommendationQuizPage() {
                   <button
                     key={profile.type as string}
                     onClick={() => setSelectedProfile(profile.type)}
-                    className="flex items-center text-left w-full rounded-[28px] transition-all duration-200 hover:scale-[1.01]"
+                    className="flex items-center text-left w-full rounded-2xl transition-all duration-200 hover:scale-[1.01]"
                     style={{
-                      minHeight: "200px",
+                      minHeight: "160px",
                       background: "#080511",
                       border: "1px solid rgba(255,255,255,0.1)",
-                      padding: "36px 44px",
+                      padding: "24px 32px",
                     }}
                     onMouseEnter={(e) => {
                       (
@@ -270,18 +270,18 @@ export function RecommendationQuizPage() {
                     }}
                   >
                     <div
-                      className="rounded-3xl flex items-center justify-center flex-shrink-0"
+                      className="rounded-2xl flex items-center justify-center flex-shrink-0"
                       style={{
-                        width: "100px",
-                        height: "100px",
+                        width: "80px",
+                        height: "80px",
                         background: profile.bgGradient,
-                        marginRight: "36px",
+                        marginRight: "28px",
                       }}
                     >
                       <Icon
                         style={{
-                          width: "48px",
-                          height: "48px",
+                          width: "38px",
+                          height: "38px",
                           color: "#ffffff",
                         }}
                       />
@@ -289,12 +289,12 @@ export function RecommendationQuizPage() {
                     <div className="flex-1">
                       <h3
                         style={{
-                          fontSize: "40px",
+                          fontSize: "34px",
                           fontWeight: "700",
                           color: "#ffffff",
                           fontFamily: "var(--font-headline)",
                           lineHeight: "1.2",
-                          marginBottom: "12px",
+                          marginBottom: "8px",
                         }}
                       >
                         {profile.type}
@@ -359,11 +359,11 @@ export function RecommendationQuizPage() {
               </p>
 
               <div
-                className="rounded-[32px] mb-8"
+                className="rounded-[20px] mb-8"
                 style={{
                   background: "#080511",
                   border: "1px solid rgba(255,255,255,0.1)",
-                  padding: "52px",
+                  padding: "40px",
                 }}
               >
                 {/* Labels */}
@@ -388,7 +388,7 @@ export function RecommendationQuizPage() {
                       fontWeight: "700",
                       fontFamily: "var(--font-headline)",
                       color:
-                        portability >= 7
+                        portability >= 6
                           ? "#5B36F4"
                           : "rgba(255,255,255,0.35)",
                     }}
@@ -449,14 +449,14 @@ export function RecommendationQuizPage() {
                   }}
                 >
                   현재 선택:{" "}
-                  <span style={{ color: "#E75300" }}>{portabilityLabel}</span>
+                  <span style={{ color: portabilityLabel === "휴대성 중심" ? "#5B36F4" : "#E75300" }}>{portabilityLabel}</span>
                 </p>
               </div>
 
               <div className="flex gap-4">
                 <button
                   onClick={() => setSelectedProfile(null)}
-                  className="rounded-[20px] flex items-center justify-center transition-all hover:bg-white/10"
+                  className="rounded-2xl flex items-center justify-center transition-all hover:bg-white/10"
                   style={{
                     height: "96px",
                     fontSize: "24px",
@@ -472,7 +472,7 @@ export function RecommendationQuizPage() {
                 </button>
                 <button
                   onClick={handleSubmit}
-                  className="flex-1 rounded-[20px] flex items-center justify-center transition-all hover:opacity-90"
+                  className="flex-1 rounded-2xl flex items-center justify-center transition-all hover:opacity-90"
                   style={{
                     height: "96px",
                     fontSize: "28px",

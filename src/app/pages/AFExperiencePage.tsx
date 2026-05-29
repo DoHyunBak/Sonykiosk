@@ -124,9 +124,9 @@ export function AFExperiencePage() {
             <button
               key={idx}
               onClick={() => handleTabChange(idx)}
-              className="rounded-xl transition-all duration-200"
+              className="rounded-2xl transition-all duration-200"
               style={{
-                padding: "16px 12px",
+                padding: "16px 20px",
                 fontSize: "20px",
                 fontWeight: activeTab === idx ? "700" : "500",
                 fontFamily: "var(--font-body)",

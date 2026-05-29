@@ -75,7 +75,7 @@ export function WhySonyPage() {
     if (activeTab === "bokeh") {
       return (
         <div
-          className="rounded-3xl flex flex-col overflow-hidden"
+          className="rounded-2xl flex flex-col overflow-hidden"
           style={{
             background: "#080511",
             border: "1px solid rgba(255,255,255,0.12)",
@@ -83,29 +83,29 @@ export function WhySonyPage() {
             height: "100%",
           }}
         >
-          <div className="flex items-center gap-5 mb-6 flex-shrink-0">
+          <div className="flex items-center gap-4 mb-6 flex-shrink-0">
             <div
-              className="rounded-2xl flex items-center justify-center flex-shrink-0"
+              className="rounded-xl flex items-center justify-center flex-shrink-0"
               style={{
-                width: "60px",
-                height: "60px",
+                width: "48px",
+                height: "48px",
                 background: "rgba(231,83,0,0.15)",
                 border: "1px solid rgba(231,83,0,0.3)",
               }}
             >
               <Focus
-                style={{ width: "28px", height: "28px", color: "#E75300" }}
+                style={{ width: "24px", height: "24px", color: "#E75300" }}
               />
             </div>
             <div>
               <h2
                 style={{
-                  fontSize: "28px",
+                  fontSize: "32px",
                   fontWeight: "700",
                   color: "#ffffff",
                   fontFamily: "var(--font-headline)",
                   lineHeight: "1.3",
-                  marginBottom: "6px",
+                  marginBottom: "4px",
                 }}
               >
                 배경흐림(아웃포커싱)의 차이
@@ -113,7 +113,8 @@ export function WhySonyPage() {
               <p
                 style={{
                   fontSize: "20px",
-                  color: "rgba(255,255,255,0.55)",
+                  fontWeight: "500",
+                  color: "rgba(255,255,255,0.6)",
                   fontFamily: "var(--font-body)",
                 }}
               >
@@ -121,7 +122,10 @@ export function WhySonyPage() {
               </p>
             </div>
           </div>
-          <div className="flex-1 overflow-hidden" style={{ minHeight: 0 }}>
+          <div
+            className="flex-1 overflow-hidden"
+            style={{ minHeight: 0, maxHeight: "480px" }}
+          >
             <ImageComparisonSlider
               beforeImage="https://images.unsplash.com/photo-1606794875400-320d1b5ed437?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
               afterImage="https://images.unsplash.com/photo-1606794875400-320d1b5ed437?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
@@ -139,7 +143,7 @@ export function WhySonyPage() {
 
     return (
       <div
-        className="rounded-3xl flex flex-col overflow-hidden"
+        className="rounded-2xl flex flex-col overflow-hidden"
         style={{
           background: "#080511",
           border: "1px solid rgba(255,255,255,0.12)",
@@ -147,29 +151,29 @@ export function WhySonyPage() {
           height: "100%",
         }}
       >
-        <div className="flex items-center gap-5 mb-6 flex-shrink-0">
+        <div className="flex items-center gap-4 mb-6 flex-shrink-0">
           <div
-            className="rounded-2xl flex items-center justify-center flex-shrink-0"
+            className="rounded-xl flex items-center justify-center flex-shrink-0"
             style={{
-              width: "60px",
-              height: "60px",
+              width: "48px",
+              height: "48px",
               background: "rgba(91,54,244,0.15)",
               border: "1px solid rgba(91,54,244,0.3)",
             }}
           >
             <Icon
-              style={{ width: "28px", height: "28px", color: "#5B36F4" }}
+              style={{ width: "24px", height: "24px", color: "#5B36F4" }}
             />
           </div>
           <div>
             <h2
               style={{
-                fontSize: "28px",
+                fontSize: "32px",
                 fontWeight: "700",
                 color: "#ffffff",
                 fontFamily: "var(--font-headline)",
                 lineHeight: "1.3",
-                marginBottom: "6px",
+                marginBottom: "4px",
               }}
             >
               {data.title}
@@ -177,9 +181,9 @@ export function WhySonyPage() {
             <p
               style={{
                 fontSize: "20px",
-                color: "#E75300",
+                fontWeight: "500",
+                color: "rgba(255,255,255,0.6)",
                 fontFamily: "var(--font-body)",
-                fontWeight: "600",
               }}
             >
               {data.description}
@@ -204,10 +208,10 @@ export function WhySonyPage() {
               <span
                 className="inline-block rounded-xl"
                 style={{
-                  background: "rgba(255,255,255,0.1)",
-                  color: "rgba(255,255,255,0.7)",
-                  padding: "10px 20px",
-                  fontSize: "20px",
+                  background: "rgba(255,255,255,0.12)",
+                  color: "rgba(255,255,255,0.8)",
+                  padding: "8px 18px",
+                  fontSize: "18px",
                   fontWeight: "600",
                   fontFamily: "var(--font-body)",
                 }}
@@ -217,7 +221,7 @@ export function WhySonyPage() {
             </div>
             <div
               className="flex-1 rounded-xl overflow-hidden"
-              style={{ minHeight: 0 }}
+              style={{ minHeight: 0, maxHeight: "520px" }}
             >
               <ImageWithFallback
                 src={data.smartphoneImage}
@@ -250,10 +254,10 @@ export function WhySonyPage() {
               <span
                 className="inline-block rounded-xl"
                 style={{
-                  background: "#080511",
-                  color: "#ffffff",
-                  padding: "10px 20px",
-                  fontSize: "20px",
+                  background: "rgba(0,0,0,0.08)",
+                  color: "#080511",
+                  padding: "8px 18px",
+                  fontSize: "18px",
                   fontWeight: "600",
                   fontFamily: "var(--font-body)",
                 }}
@@ -267,6 +271,8 @@ export function WhySonyPage() {
                   background: "linear-gradient(90deg, #E75300, #5B36F4)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  color: "transparent",
                   fontFamily: "var(--font-body)",
                 }}
               >
@@ -275,7 +281,7 @@ export function WhySonyPage() {
             </div>
             <div
               className="flex-1 rounded-xl overflow-hidden"
-              style={{ minHeight: 0 }}
+              style={{ minHeight: 0, maxHeight: "520px" }}
             >
               <ImageWithFallback
                 src={data.cameraImage}
@@ -310,7 +316,7 @@ export function WhySonyPage() {
         style={{ padding: "36px 40px 32px" }}
       >
         {/* Header */}
-        <div className="flex-shrink-0 mb-6">
+        <div className="flex-shrink-0 mb-8">
           <h1
             style={{
               fontSize: "48px",
@@ -326,10 +332,10 @@ export function WhySonyPage() {
           </h1>
           <p
             style={{
-              fontSize: "22px",
+              fontSize: "26px",
+              fontWeight: "600",
               color: "#E75300",
               fontFamily: "var(--font-body)",
-              fontWeight: "600",
               lineHeight: "1.5",
             }}
           >
@@ -349,17 +355,15 @@ export function WhySonyPage() {
                 className="flex items-center justify-center gap-3 rounded-2xl transition-all duration-200"
                 style={{
                   padding: "18px 16px",
-                  background: isActive ? "#E75300" : "#080511",
-                  border: isActive
-                    ? "none"
-                    : "1px solid rgba(255,255,255,0.1)",
+                  background: isActive ? "#E75300" : "rgba(255,255,255,0.07)",
+                  border: "none",
                   color: isActive ? "#ffffff" : "rgba(255,255,255,0.5)",
                 }}
               >
                 <Icon
                   style={{
-                    width: "22px",
-                    height: "22px",
+                    width: "26px",
+                    height: "26px",
                     color: isActive ? "#ffffff" : "rgba(255,255,255,0.5)",
                     flexShrink: 0,
                   }}
@@ -367,7 +371,7 @@ export function WhySonyPage() {
                 <span
                   style={{
                     fontSize: "20px",
-                    fontWeight: isActive ? "700" : "500",
+                    fontWeight: isActive ? "700" : "600",
                     fontFamily: "var(--font-body)",
                   }}
                 >
