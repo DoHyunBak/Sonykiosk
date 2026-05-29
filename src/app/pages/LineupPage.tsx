@@ -160,7 +160,7 @@ export function LineupPage() {
                 <ImageWithFallback
                   src={model.image}
                   alt={model.name}
-                  className="w-full h-full object-contain p-6 hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-[rgba(97,119,180,0.1)] pointer-events-none" />
                 {/* AI Badge */}
