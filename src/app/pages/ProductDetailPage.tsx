@@ -227,125 +227,120 @@ export function ProductDetailPage() {
   return (
     <div
       className="text-white overflow-y-auto"
-      style={{ height: "100%", background: "#1A1A1F" }}
+      style={{ height: "100%", background: "#050309", position: "relative" }}
     >
-      <div className="flex flex-col" style={{ minHeight: "100%" }}>
-
-        {/* ── Hero Section ── */}
+      {/* 풀스크린 라이프스타일 배경 이미지 */}
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
+        <ImageWithFallback
+          src={product.lifestyleImage}
+          alt="Lifestyle Background"
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.35 }}
+        />
+        {/* 짙은 그라데이션 오버레이 */}
         <div
-          className="relative flex-shrink-0 overflow-hidden"
-          style={{ height: "520px" }}
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(5,3,9,0.9) 0%, rgba(5,3,9,0.6) 35%, rgba(5,3,9,0.85) 100%)",
+          }}
+        />
+      </div>
+
+      <div className="flex flex-col relative z-10 w-full" style={{ minHeight: "100%" }}>
+        {/* ── Hero Section (Transparent overlay) ── */}
+        <div
+          className="relative flex-shrink-0 flex items-end"
+          style={{ padding: "56px 40px 24px" }}
         >
-          {/* Lifestyle background */}
-          <ImageWithFallback
-            src={product.lifestyleImage}
-            alt="Lifestyle"
-            className="w-full h-full object-cover"
-          />
+          <div className="flex items-end gap-10 w-full">
+            {/* Product image */}
+            <div
+              className="rounded-3xl flex items-center justify-center flex-shrink-0"
+              style={{
+                width: "240px",
+                height: "240px",
+                background: "rgba(255,255,255,0.92)",
+                padding: "20px",
+                boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
+              }}
+            >
+              <ImageWithFallback
+                src={product.image}
+                alt={product.name}
+                className="w-full h-full object-contain"
+              />
+            </div>
 
-          {/* Gradient overlay — strong left, fades right */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(100deg, rgba(3,1,15,0.88) 0%, rgba(3,1,15,0.55) 55%, rgba(3,1,15,0.15) 100%)",
-            }}
-          />
-
-          {/* Content positioned bottom-left */}
-          <div
-            className="absolute inset-0 flex items-end"
-            style={{ padding: "40px" }}
-          >
-            <div className="flex items-end gap-10 w-full">
-              {/* Product image */}
-              <div
-                className="rounded-3xl flex items-center justify-center flex-shrink-0"
-                style={{
-                  width: "240px",
-                  height: "240px",
-                  background: "rgba(255,255,255,0.92)",
-                  padding: "20px",
-                  boxShadow: "0 24px 60px rgba(0,0,0,0.4)",
-                }}
-              >
-                <ImageWithFallback
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-
-              {/* Text info */}
-              <div style={{ paddingBottom: "4px", flex: 1 }}>
-                <div className="flex items-center gap-4 mb-3">
-                  <h1
-                    style={{
-                      fontSize: "72px",
-                      fontWeight: "700",
-                      letterSpacing: "-0.02em",
-                      color: "#ffffff",
-                      fontFamily: "var(--font-headline)",
-                      lineHeight: "1.0",
-                      margin: 0,
-                    }}
-                  >
-                    {product.name}
-                  </h1>
-                  {product.hasAI && (
-                    <span
-                      className="rounded-xl flex items-center justify-center"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, #E75300 0%, #5B36F4 100%)",
-                        color: "#ffffff",
-                        fontSize: "20px",
-                        fontWeight: "700",
-                        padding: "8px 16px",
-                        letterSpacing: "0.5px",
-                        flexShrink: 0,
-                      }}
-                    >
-                      AI AF
-                    </span>
-                  )}
-                </div>
-                <p
+            {/* Text info */}
+            <div style={{ paddingBottom: "4px", flex: 1 }}>
+              <div className="flex items-center gap-4 mb-3">
+                <h1
                   style={{
-                    fontSize: "28px",
-                    color: "#E75300",
-                    fontWeight: "600",
-                    marginBottom: "20px",
-                    fontFamily: "var(--font-body)",
-                    lineHeight: "1.4",
+                    fontSize: "72px",
+                    fontWeight: "700",
+                    letterSpacing: "-0.02em",
+                    color: "#ffffff",
+                    fontFamily: "var(--font-headline)",
+                    lineHeight: "1.0",
+                    margin: 0,
                   }}
                 >
-                  {product.identity}
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  {product.useCases.map((useCase: string, idx: number) => {
-                    const tagStyle = getTagStyle(useCase);
-                    return (
-                      <span
-                        key={idx}
-                        className="rounded-full flex items-center justify-center"
-                        style={{
-                          background: tagStyle.bg,
-                          border: `1px solid ${tagStyle.border}`,
-                          color: tagStyle.color,
-                          fontSize: "20px",
-                          fontWeight: "500",
-                          padding: "0 20px",
-                          height: "40px",
-                          fontFamily: "var(--font-body)",
-                          backdropFilter: "blur(8px)",
-                        }}
-                      >
-                        {useCase}
-                      </span>
-                    );
-                  })}
-                </div>
+                  {product.name}
+                </h1>
+                {product.hasAI && (
+                  <span
+                    className="rounded-xl flex items-center justify-center"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #E75300 0%, #5B36F4 100%)",
+                      color: "#ffffff",
+                      fontSize: "20px",
+                      fontWeight: "700",
+                      padding: "8px 16px",
+                      letterSpacing: "0.5px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    AI AF
+                  </span>
+                )}
+              </div>
+              <p
+                style={{
+                  fontSize: "28px",
+                  color: "#E75300",
+                  fontWeight: "600",
+                  marginBottom: "20px",
+                  fontFamily: "var(--font-body)",
+                  lineHeight: "1.4",
+                }}
+              >
+                {product.identity}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {product.useCases.map((useCase: string, idx: number) => {
+                  const tagStyle = getTagStyle(useCase);
+                  return (
+                    <span
+                      key={idx}
+                      className="rounded-full flex items-center justify-center"
+                      style={{
+                        background: tagStyle.bg,
+                        border: `1px solid ${tagStyle.border}`,
+                        color: tagStyle.color,
+                        fontSize: "20px",
+                        fontWeight: "500",
+                        padding: "0 20px",
+                        height: "40px",
+                        fontFamily: "var(--font-body)",
+                        backdropFilter: "blur(8px)",
+                      }}
+                    >
+                      {useCase}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -354,7 +349,7 @@ export function ProductDetailPage() {
         {/* ── Info Cards + Actions ── */}
         <div
           className="flex-1 flex flex-col"
-          style={{ padding: "32px 40px 40px" }}
+          style={{ padding: "24px 40px 40px" }}
         >
           {/* Info Cards */}
           <div className="flex flex-col gap-[16px] mb-8">
