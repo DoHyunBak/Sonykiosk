@@ -36,7 +36,7 @@ const staticComparisons: Record<
     cameraImage:
       "https://images.unsplash.com/photo-1746588118658-c7cbbc463558?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
     leftLabel: "스마트폰",
-    rightLabel: "카메라",
+    rightLabel: "소니 α7",
     leftNote: "확대하면 화질이 떨어져요",
     rightNote: "선명하고 생생해요",
   },
@@ -49,7 +49,7 @@ const staticComparisons: Record<
     cameraImage:
       "https://images.unsplash.com/photo-1560181375-f64ca484cb1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
     leftLabel: "스마트폰",
-    rightLabel: "카메라",
+    rightLabel: "소니 α7",
     leftNote: "어두운 곳에서 노이즈 발생",
     rightNote: "어두운 곳도 깨끗해요",
   },
@@ -68,6 +68,62 @@ const staticComparisons: Record<
   },
 };
 
+// Shared card header: smaller icon + tighter spacing
+function CardHeader({
+  icon: Icon,
+  iconColor,
+  iconBg,
+  iconBorder,
+  title,
+  description,
+}: {
+  icon: ElementType;
+  iconColor: string;
+  iconBg: string;
+  iconBorder: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 mb-4 flex-shrink-0">
+      <div
+        className="rounded-xl flex items-center justify-center flex-shrink-0"
+        style={{
+          width: "36px",
+          height: "36px",
+          background: iconBg,
+          border: `1px solid ${iconBorder}`,
+        }}
+      >
+        <Icon style={{ width: "18px", height: "18px", color: iconColor }} />
+      </div>
+      <div>
+        <h2
+          style={{
+            fontSize: "26px",
+            fontWeight: "700",
+            color: "#ffffff",
+            fontFamily: "var(--font-headline)",
+            lineHeight: "1.2",
+          }}
+        >
+          {title}
+        </h2>
+        <p
+          style={{
+            fontSize: "18px",
+            fontWeight: "500",
+            color: "rgba(255,255,255,0.5)",
+            fontFamily: "var(--font-body)",
+          }}
+        >
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export function WhySonyPage() {
   const [activeTab, setActiveTab] = useState<TabId>("bokeh");
 
@@ -79,58 +135,28 @@ export function WhySonyPage() {
           style={{
             background: "#080511",
             border: "1px solid rgba(255,255,255,0.12)",
-            padding: "32px",
+            padding: "24px",
             height: "100%",
           }}
         >
-          <div className="flex items-center gap-4 mb-6 flex-shrink-0">
-            <div
-              className="rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{
-                width: "48px",
-                height: "48px",
-                background: "rgba(231,83,0,0.15)",
-                border: "1px solid rgba(231,83,0,0.3)",
-              }}
-            >
-              <Focus
-                style={{ width: "24px", height: "24px", color: "#E75300" }}
-              />
-            </div>
-            <div>
-              <h2
-                style={{
-                  fontSize: "32px",
-                  fontWeight: "700",
-                  color: "#ffffff",
-                  fontFamily: "var(--font-headline)",
-                  lineHeight: "1.3",
-                  marginBottom: "4px",
-                }}
-              >
-                배경흐림(아웃포커싱)의 차이
-              </h2>
-              <p
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "500",
-                  color: "rgba(255,255,255,0.6)",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                슬라이더를 좌우로 드래그하여 차이를 비교해보세요
-              </p>
-            </div>
-          </div>
+          <CardHeader
+            icon={Focus}
+            iconColor="#E75300"
+            iconBg="rgba(231,83,0,0.15)"
+            iconBorder="rgba(231,83,0,0.3)"
+            title="배경흐림(아웃포커싱)의 차이"
+            description="슬라이더를 좌우로 드래그하여 차이를 비교해보세요"
+          />
+          {/* Fixed-height slider area */}
           <div
-            className="flex-1 overflow-hidden"
-            style={{ minHeight: 0, maxHeight: "480px" }}
+            className="rounded-xl overflow-hidden flex-shrink-0"
+            style={{ height: "560px" }}
           >
             <ImageComparisonSlider
               beforeImage="https://images.unsplash.com/photo-1606794875400-320d1b5ed437?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
               afterImage="https://images.unsplash.com/photo-1606794875400-320d1b5ed437?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
               beforeLabel="스마트폰"
-              afterLabel="카메라"
+              afterLabel="소니 α7"
             />
           </div>
         </div>
@@ -147,71 +173,42 @@ export function WhySonyPage() {
         style={{
           background: "#080511",
           border: "1px solid rgba(255,255,255,0.12)",
-          padding: "32px",
+          padding: "24px",
           height: "100%",
         }}
       >
-        <div className="flex items-center gap-4 mb-6 flex-shrink-0">
-          <div
-            className="rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{
-              width: "48px",
-              height: "48px",
-              background: "rgba(91,54,244,0.15)",
-              border: "1px solid rgba(91,54,244,0.3)",
-            }}
-          >
-            <Icon
-              style={{ width: "24px", height: "24px", color: "#5B36F4" }}
-            />
-          </div>
-          <div>
-            <h2
-              style={{
-                fontSize: "32px",
-                fontWeight: "700",
-                color: "#ffffff",
-                fontFamily: "var(--font-headline)",
-                lineHeight: "1.3",
-                marginBottom: "4px",
-              }}
-            >
-              {data.title}
-            </h2>
-            <p
-              style={{
-                fontSize: "20px",
-                fontWeight: "500",
-                color: "rgba(255,255,255,0.6)",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              {data.description}
-            </p>
-          </div>
-        </div>
+        <CardHeader
+          icon={Icon}
+          iconColor="#5B36F4"
+          iconBg="rgba(91,54,244,0.15)"
+          iconBorder="rgba(91,54,244,0.3)"
+          title={data.title}
+          description={data.description}
+        />
 
+        {/* Fixed-height comparison grid — no flex-1, no dead space */}
         <div
-          className="grid grid-cols-2 gap-5 flex-1 overflow-hidden"
-          style={{ minHeight: 0 }}
+          className="grid grid-cols-2 gap-4 flex-shrink-0"
+          style={{ height: "560px" }}
         >
-          {/* Left panel */}
+          {/* Left: Smartphone panel (dark) */}
           <div
             className="rounded-2xl flex flex-col overflow-hidden"
             style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              padding: "24px",
+              background: "rgba(255,255,255,0.06)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              padding: "20px",
             }}
           >
-            <div className="mb-4 flex-shrink-0">
+            {/* Label */}
+            <div className="mb-3 flex-shrink-0">
               <span
                 className="inline-block rounded-xl"
                 style={{
-                  background: "rgba(255,255,255,0.12)",
-                  color: "rgba(255,255,255,0.8)",
-                  padding: "8px 18px",
-                  fontSize: "18px",
+                  background: "rgba(255,255,255,0.1)",
+                  color: "rgba(255,255,255,0.75)",
+                  padding: "6px 16px",
+                  fontSize: "16px",
                   fontWeight: "600",
                   fontFamily: "var(--font-body)",
                 }}
@@ -219,25 +216,22 @@ export function WhySonyPage() {
                 {data.leftLabel}
               </span>
             </div>
-            <div
-              className="flex-1 rounded-xl overflow-hidden"
-              style={{ minHeight: 0, maxHeight: "520px" }}
-            >
+            {/* Image */}
+            <div className="flex-1 rounded-xl overflow-hidden" style={{ minHeight: 0 }}>
               <ImageWithFallback
                 src={data.smartphoneImage}
                 alt={data.leftLabel}
                 className="w-full h-full object-cover"
-                style={{
-                  opacity: 0.6,
-                  filter: "saturate(0.7) contrast(0.9)",
-                }}
+                style={{ opacity: 0.55, filter: "saturate(0.6) contrast(0.85)" }}
               />
             </div>
+            {/* Caption */}
             <p
-              className="mt-4 text-center flex-shrink-0"
+              className="mt-3 text-center flex-shrink-0"
               style={{
-                fontSize: "20px",
-                color: "rgba(255,255,255,0.4)",
+                fontSize: "18px",
+                fontWeight: "500",
+                color: "rgba(255,255,255,0.5)",
                 fontFamily: "var(--font-body)",
               }}
             >
@@ -245,20 +239,25 @@ export function WhySonyPage() {
             </p>
           </div>
 
-          {/* Right panel */}
+          {/* Right: Sony panel (dark with orange tint) */}
           <div
             className="rounded-2xl flex flex-col overflow-hidden"
-            style={{ background: "#ffffff", padding: "24px" }}
+            style={{
+              background: "rgba(231,83,0,0.08)",
+              border: "1px solid rgba(231,83,0,0.25)",
+              padding: "20px",
+            }}
           >
-            <div className="mb-4 flex items-center gap-3 flex-shrink-0">
+            {/* Labels row */}
+            <div className="mb-3 flex items-center gap-3 flex-shrink-0">
               <span
                 className="inline-block rounded-xl"
                 style={{
-                  background: "rgba(0,0,0,0.08)",
-                  color: "#080511",
-                  padding: "8px 18px",
-                  fontSize: "18px",
-                  fontWeight: "600",
+                  background: "rgba(231,83,0,0.18)",
+                  color: "#E75300",
+                  padding: "6px 16px",
+                  fontSize: "16px",
+                  fontWeight: "700",
                   fontFamily: "var(--font-body)",
                 }}
               >
@@ -266,7 +265,7 @@ export function WhySonyPage() {
               </span>
               <span
                 style={{
-                  fontSize: "20px",
+                  fontSize: "18px",
                   fontWeight: "700",
                   background: "linear-gradient(90deg, #E75300, #5B36F4)",
                   WebkitBackgroundClip: "text",
@@ -279,22 +278,21 @@ export function WhySonyPage() {
                 압도적
               </span>
             </div>
-            <div
-              className="flex-1 rounded-xl overflow-hidden"
-              style={{ minHeight: 0, maxHeight: "520px" }}
-            >
+            {/* Image */}
+            <div className="flex-1 rounded-xl overflow-hidden" style={{ minHeight: 0 }}>
               <ImageWithFallback
                 src={data.cameraImage}
                 alt={data.rightLabel}
                 className="w-full h-full object-cover"
               />
             </div>
+            {/* Caption */}
             <p
-              className="mt-4 text-center flex-shrink-0"
+              className="mt-3 text-center flex-shrink-0"
               style={{
-                fontSize: "20px",
-                color: "#080511",
-                fontWeight: "600",
+                fontSize: "18px",
+                fontWeight: "700",
+                color: "#E75300",
                 fontFamily: "var(--font-body)",
               }}
             >
@@ -316,7 +314,7 @@ export function WhySonyPage() {
         style={{ padding: "8px 40px 32px" }}
       >
         {/* Header */}
-        <div className="flex-shrink-0 mb-8">
+        <div className="flex-shrink-0 mb-5">
           <h1
             style={{
               fontSize: "48px",
@@ -325,14 +323,25 @@ export function WhySonyPage() {
               color: "#ffffff",
               fontFamily: "var(--font-headline)",
               lineHeight: "1.2",
+              marginBottom: "6px",
             }}
           >
             왜 소니 알파인가요?
           </h1>
+          <p
+            style={{
+              fontSize: "20px",
+              color: "rgba(255,255,255,0.6)",
+              fontFamily: "var(--font-body)",
+              fontWeight: "400",
+            }}
+          >
+            스마트폰과의 차이를 직접 눈으로 확인하세요
+          </p>
         </div>
 
         {/* Tab Buttons */}
-        <div className="grid grid-cols-4 gap-3 mb-6 flex-shrink-0">
+        <div className="grid grid-cols-4 gap-3 mb-5 flex-shrink-0">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -342,7 +351,7 @@ export function WhySonyPage() {
                 onClick={() => setActiveTab(tab.id)}
                 className="flex items-center justify-center gap-3 rounded-2xl transition-all duration-200"
                 style={{
-                  padding: "18px 16px",
+                  padding: "16px",
                   background: isActive ? "#E75300" : "rgba(255,255,255,0.07)",
                   border: "none",
                   color: isActive ? "#ffffff" : "rgba(255,255,255,0.5)",
@@ -350,8 +359,8 @@ export function WhySonyPage() {
               >
                 <Icon
                   style={{
-                    width: "26px",
-                    height: "26px",
+                    width: "22px",
+                    height: "22px",
                     color: isActive ? "#ffffff" : "rgba(255,255,255,0.5)",
                     flexShrink: 0,
                   }}
