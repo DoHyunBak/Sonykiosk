@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Check, Camera, ChevronRight } from "lucide-react";
+import { motion } from "motion/react";
 
 export function RecommendationResultPage() {
   const navigate = useNavigate();
@@ -129,46 +130,92 @@ export function RecommendationResultPage() {
 
   return (
     <div
-      className="text-white overflow-hidden"
-      style={{ height: "100%", background: "#1A1A1F" }}
+      className="text-white"
+      style={{
+        height: "100%",
+        position: "relative",
+        overflow: "hidden",
+        background: "#050309",
+      }}
     >
+      {/* 배경 이미지 */}
+      <ImageWithFallback
+        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80"
+        alt="추천받기 배경"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: 0.45 }}
+      />
+
+      {/* 짙은 오버레이 */}
       <div
-        className="h-full flex flex-col justify-center overflow-hidden"
+        className="absolute inset-0"
+        style={{ background: "rgba(5, 3, 9, 0.7)" }}
+      />
+
+      <div
+        className="h-full flex flex-col justify-center overflow-hidden relative z-10"
         style={{ padding: "4px 36px 28px" }}
       >
         {/* Result Card */}
         <div
-          className="rounded-3xl mb-6"
-          style={{ background: "#ffffff", padding: "40px" }}
+          className="rounded-[32px] overflow-hidden mb-8"
+          style={{
+            background: "linear-gradient(135deg, rgba(26,21,44,0.7) 0%, rgba(8,5,17,0.85) 100%)",
+            border: "1px solid rgba(255, 255, 255, 0.12)",
+            backdropFilter: "blur(24px)",
+            boxShadow: "0 30px 60px -15px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.08)",
+            padding: "48px",
+          }}
         >
           <div className="grid grid-cols-2 gap-10 items-center">
-            {/* Image */}
+            {/* Image Showcase Stage */}
             <div
-              className="rounded-2xl flex items-center justify-center"
-              style={{ background: "#f3f4f6", padding: "32px" }}
+              className="rounded-2xl flex items-center justify-center relative overflow-hidden"
+              style={{
+                background: "radial-gradient(circle at center, rgba(231,83,0,0.15) 0%, rgba(8,5,17,0.4) 100%)",
+                border: "1px solid rgba(255, 255, 255, 0.06)",
+                padding: "36px",
+                height: "360px",
+              }}
             >
-              <div className="aspect-square" style={{ width: "100%" }}>
+              {/* Subtle background glow */}
+              <div
+                className="absolute rounded-full pointer-events-none"
+                style={{
+                  width: "240px",
+                  height: "240px",
+                  background: "radial-gradient(circle, rgba(231,83,0,0.18) 0%, rgba(231,83,0,0) 70%)",
+                  filter: "blur(20px)",
+                }}
+              />
+
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="aspect-square flex items-center justify-center"
+                style={{ width: "100%", maxWidth: "260px", zIndex: 2 }}
+              >
                 <ImageWithFallback
                   src={model.image}
                   alt={model.name}
                   className="w-full h-full object-contain"
                 />
-              </div>
+              </motion.div>
             </div>
 
             {/* Info */}
             <div>
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-3 mb-2">
                 <Camera
-                  style={{ width: "22px", height: "22px", color: "#080511" }}
+                  style={{ width: "24px", height: "24px", color: "#E75300" }}
                 />
                 <h2
                   style={{
-                    fontSize: "52px",
-                    fontWeight: "700",
-                    color: "#080511",
+                    fontSize: "56px",
+                    fontWeight: "800",
+                    color: "#ffffff",
                     fontFamily: "var(--font-headline)",
-                    letterSpacing: "-0.02em",
+                    letterSpacing: "-0.03em",
                     lineHeight: "1.1",
                   }}
                 >
@@ -177,10 +224,10 @@ export function RecommendationResultPage() {
               </div>
               <p
                 style={{
-                  fontSize: "20px",
+                  fontSize: "22px",
                   fontWeight: "600",
-                  color: "#6b7280",
-                  marginBottom: "20px",
+                  color: "#E8B49A",
+                  marginBottom: "28px",
                   fontFamily: "var(--font-body)",
                 }}
               >
@@ -189,29 +236,30 @@ export function RecommendationResultPage() {
 
               <div className="space-y-4">
                 {model.reasons.map((reason: string, idx: number) => (
-                  <div key={idx} className="flex items-start gap-3">
+                  <div key={idx} className="flex items-start gap-4">
                     <div
                       className="rounded-full flex items-center justify-center flex-shrink-0"
                       style={{
-                        width: "26px",
-                        height: "26px",
-                        background: "#E75300",
-                        marginTop: "2px",
+                        width: "28px",
+                        height: "28px",
+                        background: "rgba(231, 83, 0, 0.15)",
+                        border: "1px solid rgba(231, 83, 0, 0.4)",
+                        marginTop: "3px",
                       }}
                     >
                       <Check
                         style={{
-                          width: "13px",
-                          height: "13px",
-                          color: "#ffffff",
+                          width: "14px",
+                          height: "14px",
+                          color: "#E75300",
                         }}
                       />
                     </div>
                     <p
                       style={{
-                        fontSize: "18px",
+                        fontSize: "20px",
                         fontWeight: "500",
-                        color: "#374151",
+                        color: "rgba(255, 255, 255, 0.9)",
                         fontFamily: "var(--font-body)",
                       }}
                     >
@@ -241,16 +289,16 @@ export function RecommendationResultPage() {
             {model.lensRecommendations.map((lens: any, idx: number) => (
               <div
                 key={idx}
-                className="rounded-2xl"
+                className="rounded-2xl transition-all duration-300"
                 style={{
-                  background: "#080511",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
+                  border: "1px solid rgba(255,255,255,0.08)",
                   padding: "20px 24px",
                 }}
               >
                 <h4
                   style={{
-                    fontSize: "17px",
+                    fontSize: "18px",
                     fontWeight: "700",
                     color: "#ffffff",
                     fontFamily: "var(--font-headline)",
@@ -261,9 +309,10 @@ export function RecommendationResultPage() {
                 </h4>
                 <p
                   style={{
-                    fontSize: "14px",
+                    fontSize: "15px",
                     color: "#E8B49A",
                     fontFamily: "var(--font-body)",
+                    fontWeight: "500",
                   }}
                 >
                   {lens.desc}

@@ -15,7 +15,7 @@ import heroBgImage from "../../imports/17783066980361.png";
 const row1 = { title: "라인업", icon: Camera, path: "/lineup" };
 
 const row2 = [
-  { title: "렌즈", icon: Aperture, path: "/lens" },
+  { title: "렌즈호환성", icon: Aperture, path: "/lens" },
   { title: "소니 장점", icon: Award, path: "/why-sony" },
   { title: "초점 기능", icon: Crosshair, path: "/af" },
 ];

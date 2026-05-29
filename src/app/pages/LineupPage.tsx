@@ -2,6 +2,22 @@ import { useNavigate } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Weight, ChevronRight } from "lucide-react";
 
+function getTagStyle(useCase: string) {
+  switch (useCase) {
+    case "여행":
+      return { bg: "rgba(14, 165, 233, 0.12)", border: "rgba(14, 165, 233, 0.25)", color: "#38bdf8" }; // Sky Blue
+    case "일상":
+      return { bg: "rgba(16, 185, 129, 0.12)", border: "rgba(16, 185, 129, 0.25)", color: "#34d399" }; // Emerald Green
+    case "입문":
+      return { bg: "rgba(139, 92, 246, 0.12)", border: "rgba(139, 92, 246, 0.25)", color: "#a78bfa" }; // Purple
+    case "브이로그":
+    case "영상":
+      return { bg: "rgba(245, 158, 11, 0.12)", border: "rgba(245, 158, 11, 0.25)", color: "#fbbf24" }; // Orange/Amber
+    default:
+      return { bg: "rgba(255, 255, 255, 0.06)", border: "rgba(255, 255, 255, 0.1)", color: "rgba(255, 255, 255, 0.6)" };
+  }
+}
+
 export function LineupPage() {
   const navigate = useNavigate();
 
@@ -95,11 +111,44 @@ export function LineupPage() {
   return (
     <div
       className="text-white w-full h-full flex flex-col overflow-hidden"
-      style={{ background: "#1A1A1F" }}
+      style={{ position: "relative", background: "#050309" }}
     >
-      <div className="flex-1 w-full px-[24px] pt-[28px] pb-[28px] flex flex-col justify-start items-center">
+      {/* 배경 이미지 */}
+      <ImageWithFallback
+        src="/src/imports/17783066980361.png"
+        alt="라인업 배경"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: 0.45, objectPosition: "65% 50%" }}
+      />
+
+      {/* 짙은 오버레이 */}
+      <div
+        className="absolute inset-0"
+        style={{ background: "rgba(5, 3, 9, 0.7)" }}
+      />
+
+      <div
+        className="flex-1 w-full px-[24px] pb-[32px] flex flex-col justify-start items-center relative z-10"
+        style={{ padding: "56px 40px 32px" }}
+      >
+        {/* Page Title / Question */}
+        <h2
+          style={{
+            fontSize: "36px",
+            fontWeight: "700",
+            color: "#ffffff",
+            fontFamily: "var(--font-headline)",
+            letterSpacing: "-0.02em",
+            marginBottom: "24px",
+            textAlign: "center",
+            textShadow: "0 2px 10px rgba(0,0,0,0.85)",
+          }}
+        >
+          어떤 카메라를 가장 먼저 탐색해볼까요?
+        </h2>
+
         {/* 2×3 Grid */}
-        <div className="grid grid-cols-2 gap-x-[24px] gap-y-[24px] w-[1032px] place-items-center">
+        <div className="grid grid-cols-2 gap-x-[24px] gap-y-[20px] w-[1032px] place-items-center">
           {lineup.map((model) => (
             <div
               key={model.id}
@@ -109,7 +158,7 @@ export function LineupPage() {
                 background: "#080511",
                 border: "0.667px solid rgba(255,255,255,0.5)",
                 width: "504px",
-                height: "499px"
+                height: "450px"
               }}
             >
               {/* Product Image */}
@@ -117,14 +166,14 @@ export function LineupPage() {
                 className="relative overflow-hidden flex items-center justify-center flex-shrink-0"
                 style={{
                   background: "linear-gradient(180deg, #2c2c2c 50%, rgba(25,24,24,0.6) 100%)",
-                  height: "310px",
+                  height: "270px",
                   width: "100%"
                 }}
               >
                 <ImageWithFallback
                   src={model.image}
                   alt={model.name}
-                  className="w-full h-full object-contain p-8 hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain p-6 hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-[rgba(97,119,180,0.1)] pointer-events-none" />
                 {/* AI Badge */}
@@ -152,12 +201,12 @@ export function LineupPage() {
               {/* Content */}
               <div
                 className="relative flex flex-col flex-shrink-0"
-                style={{ padding: "14px 16px", height: "189px", width: "100%" }}
+                style={{ padding: "14px 16px", height: "180px", width: "100%" }}
               >
                 {/* Name & Weight & Arrow */}
                 <div className="flex items-center justify-between h-[43px]">
                   <div className="flex items-center gap-[16px]">
-                    <h2
+                     <h2
                       style={{
                         fontSize: "36px",
                         fontWeight: "800",
@@ -227,16 +276,15 @@ export function LineupPage() {
                 {/* Use Cases */}
                 <div className="flex items-center gap-[12px] mt-[13px]">
                   {model.useCases.map((useCase, idx) => {
-                    const bg = "rgba(255,255,255,0.08)";
-                    const color = "rgba(255,255,255,0.75)";
-
+                    const tagStyle = getTagStyle(useCase);
                     return (
                       <div
                         key={idx}
                         className="flex items-center justify-center"
                         style={{
                           height: "36px",
-                          background: bg,
+                          background: tagStyle.bg,
+                          border: `1px solid ${tagStyle.border}`,
                           borderRadius: "34px",
                           padding: "0 20px",
                         }}
@@ -245,7 +293,7 @@ export function LineupPage() {
                           style={{
                             fontSize: "22px",
                             fontWeight: "600",
-                            color: color,
+                            color: tagStyle.color,
                             fontFamily: "var(--font-body)",
                             lineHeight: "33px",
                           }}

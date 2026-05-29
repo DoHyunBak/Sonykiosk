@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
-import { Eye } from "lucide-react";
+import { Eye, Smile, Heart, Music, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
-// ─────────────────────────────────────────────
-// TODO: 영상 파일을 /public/videos/ 에 넣은 뒤
-//       각 video / poster 경로를 실제 파일명으로 교체하세요.
-// TODO: afPoints 좌표는 실제 영상의 피사체 위치에 맞게
-//       fine-tune이 필요합니다 (x/y = 컨테이너 기준 %).
-// ─────────────────────────────────────────────
 const scenarios = [
   {
     name: "아이",
+    icon: Smile,
     video: "/src/imports/videos/kids.mp4",
     poster: "/images/af-child-thumbnail.jpg",
     problem: "아이가 계속 움직여서 초점이 안 맞아요",
@@ -32,7 +28,8 @@ const scenarios = [
   },
   {
     name: "반려동물",
-    video: "/videos/af-pet.mp4",
+    icon: Heart,
+    video: "/src/imports/videos/pet.mp4",
     poster: "/images/af-pet-thumbnail.jpg",
     problem: "강아지가 너무 빨라서 흔들린 사진만 나와요",
     fail: "동물이 갑자기 움직이면 초점이 배경으로 빠집니다",
@@ -51,7 +48,8 @@ const scenarios = [
   },
   {
     name: "공연",
-    video: "/videos/af-concert.mp4",
+    icon: Music,
+    video: "/src/imports/videos/concert.mp4",
     poster: "/images/af-concert-thumbnail.jpg",
     problem: "어두운 무대에서 초점이 계속 헤매요",
     fail: "조명이 바뀔 때마다 초점이 흔들립니다",
@@ -72,7 +70,8 @@ const scenarios = [
   },
   {
     name: "야간 거리",
-    video: "/videos/af-night.mp4",
+    icon: Moon,
+    video: "/src/imports/videos/night.mp4",
     poster: "/images/af-night-thumbnail.jpg",
     problem: "밤에는 초점이 아예 안 잡혀요",
     fail: "어두우면 AF가 작동하지 않거나 느립니다",
@@ -108,142 +107,196 @@ export function AFExperiencePage() {
 
   return (
     <div
-      className="text-white overflow-hidden"
-      style={{ height: "100%", background: "#1A1A1F" }}
+      className="text-white w-full h-full"
+      style={{
+        height: "100%",
+        position: "relative",
+        overflow: "hidden",
+        background: "#050309",
+      }}
     >
+      {/* 풀스크린 비디오 백그라운드 (배경으로 직접 동작) */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <AnimatePresence mode="wait">
+          <motion.video
+            key={activeTab}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={scene.poster}
+            className="w-full h-full object-cover"
+            style={{ display: "block" }}
+          >
+            <source src={scene.video} type="video/mp4" />
+          </motion.video>
+        </AnimatePresence>
+      </div>
+
+      {/* 짙은 오버레이 (상하단 텍스트 및 탭 가독성 확보) */}
       <div
-        className="h-full flex flex-col justify-center overflow-hidden"
-        style={{ padding: "4px 36px 32px" }}
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{
+          background: "linear-gradient(to bottom, rgba(5,3,9,0.85) 0%, rgba(5,3,9,0.4) 20%, rgba(5,3,9,0.05) 50%, rgba(5,3,9,0.3) 80%, rgba(5,3,9,0.7) 100%)",
+        }}
+      />
+
+      {/* 대화형 부모 컨테이너: 이벤트는 비디오 영역으로 통과시키고 컨트롤 영역만 포인터 이벤트 허용 */}
+      <div
+        className="h-full flex flex-col justify-start overflow-hidden relative z-20 pointer-events-none"
+        style={{ padding: "56px 40px 32px" }}
       >
-        {/* Tabs */}
-        <div className="grid grid-cols-4 gap-3 mb-5 flex-shrink-0">
-          {scenarios.map((s, idx) => (
-            <button
-              key={idx}
-              onClick={() => setActiveTab(idx)}
-              className="rounded-2xl transition-all duration-200"
-              style={{
-                padding: "16px 20px",
-                fontSize: "20px",
-                fontWeight: activeTab === idx ? "700" : "500",
-                fontFamily: "var(--font-body)",
-                background:
-                  activeTab === idx ? "#E75300" : "rgba(255,255,255,0.07)",
-                color: activeTab === idx ? "#ffffff" : "rgba(255,255,255,0.6)",
-              }}
-            >
-              {s.name}
-            </button>
-          ))}
+        <div className="pointer-events-auto w-full flex flex-col items-center">
+          {/* Page Title / Question */}
+          <h2
+            style={{
+              fontSize: "36px",
+              fontWeight: "700",
+              color: "#ffffff",
+              fontFamily: "var(--font-headline)",
+              letterSpacing: "-0.02em",
+              marginBottom: "24px",
+              textAlign: "center",
+              textShadow: "0 2px 10px rgba(0,0,0,0.85)",
+            }}
+          >
+            어떤 상황에서 가장 초점을 맞추기 어려우셨나요?
+          </h2>
+
+          {/* Tab Buttons (Glassmorphic Styled) */}
+          <div className="grid grid-cols-4 gap-3 mb-6 w-full">
+            {scenarios.map((s, idx) => {
+              const Icon = s.icon;
+              const isActive = activeTab === idx;
+              return (
+                <motion.button
+                  key={idx}
+                  onClick={() => setActiveTab(idx)}
+                  whileTap={{ scale: 0.96 }}
+                  className="flex items-center justify-center gap-3 rounded-2xl transition-colors duration-200"
+                  style={{
+                    padding: "16px",
+                    background: isActive ? "#E75300" : "rgba(5,3,9,0.65)",
+                    border: isActive ? "none" : "1px solid rgba(255,255,255,0.08)",
+                    backdropFilter: "blur(12px)",
+                    color: isActive ? "#ffffff" : "rgba(255,255,255,0.7)",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
+                  }}
+                >
+                  <Icon
+                    style={{
+                      width: "22px",
+                      height: "22px",
+                      color: isActive ? "#ffffff" : "rgba(255,255,255,0.7)",
+                      flexShrink: 0,
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: isActive ? "700" : "600",
+                      fontFamily: "var(--font-body)",
+                    }}
+                  >
+                    {s.name}
+                  </span>
+                </motion.button>
+              );
+            })}
+          </div>
         </div>
 
-        <div className="flex flex-col flex-shrink-0">
-          {/* Video with AF tracking */}
+        {/* Status badge & AF Tracking Frame — positioned relative to the full screen viewport */}
+        <div className="absolute inset-0 pointer-events-none w-full h-full">
+          {/* Status badge */}
           <div
-            className="w-full relative rounded-2xl overflow-hidden flex-shrink-0"
-            style={{ height: "680px" }}
+            className="absolute rounded-xl flex items-center gap-3"
+            style={{
+              top: "220px",
+              left: "40px",
+              background: "rgba(0,0,0,0.65)",
+              backdropFilter: "blur(12px)",
+              padding: "10px 18px",
+              border: "1px solid rgba(255,255,255,0.12)",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
+            }}
           >
-            <AnimatePresence mode="wait">
-              <motion.video
-                key={activeTab}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.35 }}
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster={scene.poster}
-                className="w-full h-full object-cover"
-                style={{ display: "block" }}
-              >
-                <source src={scene.video} type="video/mp4" />
-              </motion.video>
-            </AnimatePresence>
-
-            {/* Status badge */}
-            <div
-              className="absolute top-5 left-5 rounded-xl flex items-center gap-3"
+            <Eye style={{ width: "18px", height: "18px", color: "#E75300" }} />
+            <span
               style={{
-                background: "rgba(0,0,0,0.6)",
-                backdropFilter: "blur(10px)",
-                padding: "10px 18px",
-                border: "1px solid rgba(255,255,255,0.12)",
+                fontSize: "16px",
+                fontWeight: "600",
+                color: "#ffffff",
+                fontFamily: "var(--font-body)",
               }}
             >
-              <Eye style={{ width: "18px", height: "18px", color: "#E75300" }} />
-              <span
-                style={{
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  color: "#ffffff",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                AI Eye Tracking AF
-              </span>
-              <motion.div
-                animate={{ opacity: [1, 0.15, 1] }}
-                transition={{ duration: 1.1, repeat: Infinity }}
-                style={{
-                  width: "7px",
-                  height: "7px",
-                  borderRadius: "50%",
-                  background: "#E75300",
-                  flexShrink: 0,
-                }}
-              />
-            </div>
-
-            {/* Animated AF tracking box */}
+              AI Eye Tracking AF
+            </span>
             <motion.div
-              animate={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-              transition={{ type: "spring", stiffness: 90, damping: 18 }}
-              className="absolute pointer-events-none"
+              animate={{ opacity: [1, 0.15, 1] }}
+              transition={{ duration: 1.1, repeat: Infinity }}
               style={{
-                width: "130px",
-                height: "130px",
-                marginLeft: "-65px",
-                marginTop: "-65px",
+                width: "7px",
+                height: "7px",
+                borderRadius: "50%",
+                background: "#E75300",
+                flexShrink: 0,
+              }}
+            />
+          </div>
+
+          {/* Animated AF tracking box */}
+          <motion.div
+            animate={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+            transition={{ type: "spring", stiffness: 90, damping: 18 }}
+            className="absolute"
+            style={{
+              width: "130px",
+              height: "130px",
+              marginLeft: "-65px",
+              marginTop: "-65px",
+            }}
+          >
+            {/* Corner marks */}
+            {[
+              { top: 0, left: 0, borderTop: "2px solid #E75300", borderLeft: "2px solid #E75300" },
+              { top: 0, right: 0, borderTop: "2px solid #E75300", borderRight: "2px solid #E75300" },
+              { bottom: 0, left: 0, borderBottom: "2px solid #E75300", borderLeft: "2px solid #E75300" },
+              { bottom: 0, right: 0, borderBottom: "2px solid #E75300", borderRight: "2px solid #E75300" },
+            ].map((c, i) => (
+              <div
+                key={i}
+                className="absolute"
+                style={{ ...c, width: "18px", height: "18px" }}
+              />
+            ))}
+
+            {/* Center crosshair dot */}
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+              style={{ width: "5px", height: "5px", background: "#E75300" }}
+            />
+
+            {/* Label */}
+            <div
+              className="absolute -bottom-7 left-1/2 -translate-x-1/2 rounded-md whitespace-nowrap"
+              style={{
+                background: "#E75300",
+                color: "#ffffff",
+                padding: "3px 10px",
+                fontSize: "12px",
+                fontWeight: "700",
+                fontFamily: "var(--font-body)",
+                boxShadow: "0 4px 10px rgba(0,0,0,0.35)",
               }}
             >
-              {/* Corner marks */}
-              {[
-                { top: 0, left: 0, borderTop: "2px solid #E75300", borderLeft: "2px solid #E75300" },
-                { top: 0, right: 0, borderTop: "2px solid #E75300", borderRight: "2px solid #E75300" },
-                { bottom: 0, left: 0, borderBottom: "2px solid #E75300", borderLeft: "2px solid #E75300" },
-                { bottom: 0, right: 0, borderBottom: "2px solid #E75300", borderRight: "2px solid #E75300" },
-              ].map((c, i) => (
-                <div
-                  key={i}
-                  className="absolute"
-                  style={{ ...c, width: "18px", height: "18px" }}
-                />
-              ))}
-
-              {/* Center crosshair dot */}
-              <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-                style={{ width: "5px", height: "5px", background: "#E75300" }}
-              />
-
-              {/* Label */}
-              <div
-                className="absolute -bottom-7 left-1/2 -translate-x-1/2 rounded-md whitespace-nowrap"
-                style={{
-                  background: "#E75300",
-                  color: "#ffffff",
-                  padding: "3px 10px",
-                  fontSize: "12px",
-                  fontWeight: "700",
-                  fontFamily: "var(--font-body)",
-                }}
-              >
-                눈 인식 중
-              </div>
-            </motion.div>
-          </div>
+              눈 인식 중
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>

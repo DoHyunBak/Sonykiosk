@@ -13,7 +13,7 @@ import { TopLogo } from "./TopLogo";
 const navItems = [
   { label: "라인업", path: "/lineup", icon: LayoutGrid },
   { label: "소니 장점", path: "/why-sony", icon: Award },
-  { label: "렌즈", path: "/lens", icon: Aperture },
+  { label: "렌즈호환성", path: "/lens", icon: Aperture },
   { label: "초점 기능", path: "/af", icon: Crosshair },
   { label: "추천받기", path: "/recommendation", icon: Lightbulb },
 ];
@@ -35,7 +35,7 @@ export function Layout() {
         {/* ── Main Content ── */}
         <main
           className="flex-1 overflow-hidden relative"
-          style={{ background: "#1A1A1F", paddingTop: "90px" }}
+          style={{ background: "#050309" }}
         >
           <Outlet />
         </main>

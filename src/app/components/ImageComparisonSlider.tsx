@@ -84,7 +84,7 @@ export function ImageComparisonSlider({
     <div className="relative w-full h-full">
       <div
         ref={containerRef}
-        className="relative w-full h-full rounded-3xl overflow-hidden cursor-col-resize select-none"
+        className="relative w-full h-full overflow-hidden cursor-col-resize select-none"
         style={{ backgroundColor: "#111" }}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}

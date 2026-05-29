@@ -160,17 +160,60 @@ export function RecommendationQuizPage() {
       ? "휴대성 중심"
       : "균형 중시";
 
+  let activeQuestion = "어떤 사진을 찍고 싶으세요?";
+  if (showResult) {
+    activeQuestion = "나에게 딱 맞는 소니";
+  } else if (selectedProfile) {
+    activeQuestion = "어느 쪽이 더 중요한가요?";
+  }
+
   return (
     <div
-      className="text-white overflow-hidden"
-      style={{ height: "100%", background: "#1A1A1F" }}
+      className="text-white"
+      style={{
+        height: "100%",
+        position: "relative",
+        overflow: "hidden",
+        background: "#050309",
+      }}
     >
+      {/* 배경 이미지 */}
+      <ImageWithFallback
+        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80"
+        alt="추천받기 배경"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: 0.45 }}
+      />
+
+      {/* 짙은 오버레이 */}
       <div
-        className="h-full flex flex-col overflow-hidden"
-        style={{ padding: "4px 40px 36px" }}
+        className="absolute inset-0"
+        style={{ background: "rgba(5, 3, 9, 0.7)" }}
+      />
+
+      <div
+        className="h-full flex flex-col justify-start items-center overflow-hidden relative z-10"
+        style={{ padding: "56px 40px 32px" }}
       >
-        {/* Step Indicator */}
-        <div className="flex items-center gap-5 mb-8 flex-shrink-0">
+        <div className="w-full max-w-[960px] flex flex-col">
+          {/* Page Title / Question */}
+          <h2
+            style={{
+              fontSize: "36px",
+              fontWeight: "700",
+              color: "#ffffff",
+              fontFamily: "var(--font-headline)",
+              letterSpacing: "-0.02em",
+              marginBottom: "24px",
+              textAlign: "center",
+              textShadow: "0 2px 10px rgba(0,0,0,0.85)",
+            }}
+          >
+            {activeQuestion}
+          </h2>
+
+          {/* Step Indicator */}
+          <div className="flex items-center justify-center gap-5 mb-8 flex-shrink-0">
           {[
             { step: 1, label: "프로필 선택", active: !selectedProfile },
             {
@@ -227,20 +270,8 @@ export function RecommendationQuizPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex flex-col gap-5 flex-1 justify-center"
+              className="flex flex-col gap-5"
             >
-              <h2
-                style={{
-                  fontSize: "36px",
-                  fontWeight: "700",
-                  color: "#ffffff",
-                  fontFamily: "var(--font-headline)",
-                  letterSpacing: "-0.02em",
-                  marginBottom: "8px",
-                }}
-              >
-                어떤 사진을 찍고 싶으세요?
-              </h2>
               {profiles.map((profile) => {
                 const Icon = profile.icon;
                 return (
@@ -331,20 +362,8 @@ export function RecommendationQuizPage() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0 }}
-              className="flex flex-col flex-1 justify-center"
+              className="flex flex-col"
             >
-              <h2
-                style={{
-                  fontSize: "36px",
-                  fontWeight: "700",
-                  color: "#ffffff",
-                  fontFamily: "var(--font-headline)",
-                  letterSpacing: "-0.02em",
-                  marginBottom: "10px",
-                }}
-              >
-                어느 쪽이 더 중요한가요?
-              </h2>
               <p
                 style={{
                   fontSize: "20px",
@@ -495,7 +514,7 @@ export function RecommendationQuizPage() {
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              className="flex flex-col flex-1 overflow-hidden"
+              className="flex flex-col"
             >
               {/* Result Card */}
               <div
@@ -851,6 +870,7 @@ export function RecommendationQuizPage() {
             </motion.div>
           )}
         </AnimatePresence>
+        </div>
       </div>
     </div>
   );

@@ -3,6 +3,22 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Users, Weight, Zap, MapPin, X } from "lucide-react";
 import { useState } from "react";
 
+function getTagStyle(useCase: string) {
+  switch (useCase) {
+    case "여행":
+      return { bg: "rgba(14, 165, 233, 0.12)", border: "rgba(14, 165, 233, 0.25)", color: "#38bdf8" }; // Sky Blue
+    case "일상":
+      return { bg: "rgba(16, 185, 129, 0.12)", border: "rgba(16, 185, 129, 0.25)", color: "#34d399" }; // Emerald Green
+    case "입문":
+      return { bg: "rgba(139, 92, 246, 0.12)", border: "rgba(139, 92, 246, 0.25)", color: "#a78bfa" }; // Purple
+    case "브이로그":
+    case "영상":
+      return { bg: "rgba(245, 158, 11, 0.12)", border: "rgba(245, 158, 11, 0.25)", color: "#fbbf24" }; // Orange/Amber
+    default:
+      return { bg: "rgba(255, 255, 255, 0.06)", border: "rgba(255, 255, 255, 0.1)", color: "rgba(255, 255, 255, 0.6)" };
+  }
+}
+
 export function ProductDetailPage() {
   const { modelId } = useParams();
   const navigate = useNavigate();
@@ -307,25 +323,28 @@ export function ProductDetailPage() {
                   {product.identity}
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  {product.useCases.map((useCase: string, idx: number) => (
-                    <span
-                      key={idx}
-                      className="rounded-full flex items-center justify-center"
-                      style={{
-                        background: "rgba(255,255,255,0.14)",
-                        border: "1px solid rgba(255,255,255,0.28)",
-                        color: "#ffffff",
-                        fontSize: "20px",
-                        fontWeight: "500",
-                        padding: "0 20px",
-                        height: "40px",
-                        fontFamily: "var(--font-body)",
-                        backdropFilter: "blur(8px)",
-                      }}
-                    >
-                      {useCase}
-                    </span>
-                  ))}
+                  {product.useCases.map((useCase: string, idx: number) => {
+                    const tagStyle = getTagStyle(useCase);
+                    return (
+                      <span
+                        key={idx}
+                        className="rounded-full flex items-center justify-center"
+                        style={{
+                          background: tagStyle.bg,
+                          border: `1px solid ${tagStyle.border}`,
+                          color: tagStyle.color,
+                          fontSize: "20px",
+                          fontWeight: "500",
+                          padding: "0 20px",
+                          height: "40px",
+                          fontFamily: "var(--font-body)",
+                          backdropFilter: "blur(8px)",
+                        }}
+                      >
+                        {useCase}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             </div>
