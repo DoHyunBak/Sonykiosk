@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Weight, ChevronRight } from "lucide-react";
-import lineupBgImage from "../../imports/17783066980361.png";
 
 function getTagStyle(useCase: string) {
   switch (useCase) {
@@ -114,19 +113,6 @@ export function LineupPage() {
       className="text-white w-full h-full flex flex-col overflow-hidden"
       style={{ position: "relative", background: "#050309" }}
     >
-      {/* 배경 이미지 */}
-      <ImageWithFallback
-        src={lineupBgImage}
-        alt="라인업 배경"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 0.45, objectPosition: "65% 50%" }}
-      />
-
-      {/* 짙은 오버레이 */}
-      <div
-        className="absolute inset-0"
-        style={{ background: "rgba(5, 3, 9, 0.7)" }}
-      />
 
       <div
         className="flex-1 w-full px-[24px] pb-[32px] flex flex-col justify-start items-center relative z-10"
