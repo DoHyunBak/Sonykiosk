@@ -11,7 +11,7 @@ import { motion, AnimatePresence } from "motion/react";
 const scenarios = [
   {
     name: "아이",
-    video: "/videos/af-child.mp4",
+    video: "/src/imports/videos/kids.mp4",
     poster: "/images/af-child-thumbnail.jpg",
     problem: "아이가 계속 움직여서 초점이 안 맞아요",
     fail: "셔터를 누를 때마다 초점을 다시 잡아야 합니다",
