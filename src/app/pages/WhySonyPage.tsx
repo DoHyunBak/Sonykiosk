@@ -136,7 +136,6 @@ export function WhySonyPage() {
             background: "#080511",
             border: "1px solid rgba(255,255,255,0.12)",
             padding: "24px",
-            height: "100%",
           }}
         >
           <CardHeader
@@ -310,7 +309,7 @@ export function WhySonyPage() {
       style={{ height: "100%", background: "#1A1A1F" }}
     >
       <div
-        className="h-full flex flex-col overflow-hidden"
+        className="h-full flex flex-col justify-center overflow-hidden"
         style={{ padding: "8px 40px 32px" }}
       >
         {/* Tab Buttons */}
@@ -353,7 +352,7 @@ export function WhySonyPage() {
         </div>
 
         {/* Tab Content */}
-        <div className="flex-1 overflow-hidden" style={{ minHeight: 0 }}>
+        <div className="overflow-hidden flex-shrink-0">
           {renderContent()}
         </div>
       </div>

@@ -88,7 +88,7 @@ export function AFExperiencePage() {
       style={{ height: "100%", background: "#1A1A1F" }}
     >
       <div
-        className="h-full flex flex-col overflow-hidden"
+        className="h-full flex flex-col justify-center overflow-hidden"
         style={{ padding: "4px 36px 32px" }}
       >
         {/* Tabs */}
@@ -113,7 +113,7 @@ export function AFExperiencePage() {
           ))}
         </div>
 
-        <div className="flex flex-col flex-1 overflow-hidden gap-4">
+        <div className="flex flex-col flex-shrink-0 gap-4">
           {/* Video with AF tracking */}
           <div
             className="w-full relative rounded-2xl overflow-hidden flex-shrink-0"

@@ -13,16 +13,17 @@ export function LensPage() {
       style={{ height: "100%", background: "#1A1A1F" }}
     >
       <div
-        className="h-full flex flex-col overflow-hidden"
+        className="h-full flex flex-col justify-center overflow-hidden"
         style={{ padding: "8px 40px 36px" }}
       >
         {/* Hero Image */}
         <div
-          className="rounded-2xl overflow-hidden flex-1 relative"
+          className="rounded-2xl overflow-hidden relative"
           style={{
             background: "#080511",
             border: "1px solid rgba(255,255,255,0.1)",
-            minHeight: 0,
+            height: "1100px",
+            maxHeight: "100%",
           }}
         >
           <ImageWithFallback
