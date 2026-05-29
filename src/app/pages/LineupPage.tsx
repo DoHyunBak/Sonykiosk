@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Weight, ChevronRight } from "lucide-react";
+import lineupBgImage from "../../imports/17783066980361.png";
 
 function getTagStyle(useCase: string) {
   switch (useCase) {
@@ -115,7 +116,7 @@ export function LineupPage() {
     >
       {/* 배경 이미지 */}
       <ImageWithFallback
-        src="/src/imports/17783066980361.png"
+        src={lineupBgImage}
         alt="라인업 배경"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ opacity: 0.45, objectPosition: "65% 50%" }}

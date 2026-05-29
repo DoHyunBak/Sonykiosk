@@ -2,12 +2,16 @@ import { useState, useEffect } from "react";
 import { Eye, Smile, Heart, Music, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import kidsVideo from "../../imports/videos/kids.mp4";
+import petVideo from "../../imports/videos/pet.mp4";
+import concertVideo from "../../imports/videos/concert.mp4";
+import nightVideo from "../../imports/videos/night.mp4";
 
 const scenarios = [
   {
     name: "아이",
     icon: Smile,
-    video: "/src/imports/videos/kids.mp4",
+    video: kidsVideo,
     poster: "/images/af-child-thumbnail.jpg",
     problem: "아이가 계속 움직여서 초점이 안 맞아요",
     fail: "셔터를 누를 때마다 초점을 다시 잡아야 합니다",
@@ -29,7 +33,7 @@ const scenarios = [
   {
     name: "반려동물",
     icon: Heart,
-    video: "/src/imports/videos/pet.mp4",
+    video: petVideo,
     poster: "/images/af-pet-thumbnail.jpg",
     problem: "강아지가 너무 빨라서 흔들린 사진만 나와요",
     fail: "동물이 갑자기 움직이면 초점이 배경으로 빠집니다",
@@ -49,7 +53,7 @@ const scenarios = [
   {
     name: "공연",
     icon: Music,
-    video: "/src/imports/videos/concert.mp4",
+    video: concertVideo,
     poster: "/images/af-concert-thumbnail.jpg",
     problem: "어두운 무대에서 초점이 계속 헤매요",
     fail: "조명이 바뀔 때마다 초점이 흔들립니다",
@@ -71,7 +75,7 @@ const scenarios = [
   {
     name: "야간 거리",
     icon: Moon,
-    video: "/src/imports/videos/night.mp4",
+    video: nightVideo,
     poster: "/images/af-night-thumbnail.jpg",
     problem: "밤에는 초점이 아예 안 잡혀요",
     fail: "어두우면 AF가 작동하지 않거나 느립니다",

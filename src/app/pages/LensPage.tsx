@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import lensBgImage from "../../imports/E마운트.png";
 
 const brands = [
   { name: "Sony G Master", sub: "최고급 렌즈 라인 · 압도적 해상력 · 방진방습" },
@@ -123,7 +124,7 @@ export function LensPage() {
     >
       {/* 배경 이미지 */}
       <ImageWithFallback
-        src="/src/imports/E마운트.png"
+        src={lensBgImage}
         alt="소니 E-마운트 렌즈 생태계"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ opacity: 0.45 }}
