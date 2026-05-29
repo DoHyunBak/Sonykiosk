@@ -13,6 +13,13 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
+import sonyA7C from "../../imports/sony_a7c.png";
+import sonyA7C2 from "../../imports/sony_a7c2.png";
+import sonyA7CR from "../../imports/sony_a7cr.png";
+import sonyA7M4 from "../../imports/sony_a7m4.png";
+import sonyA7M5 from "../../imports/sony_a7m5.png";
+import sonyA7R5 from "../../imports/sony_a7r5.png";
+
 type ProfileType = "여행형" | "일상기록형" | "영상입문형" | null;
 
 const profiles = [
@@ -43,8 +50,7 @@ const models: Record<string, any> = {
   a7c: {
     name: "α7C",
     identity: "소니 입문, 가볍게 시작",
-    image:
-      "https://images.unsplash.com/photo-1722842179085-5423886195ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+    image: sonyA7C,
     reasons: [
       "가장 가벼운 풀프레임",
       "직관적인 초보자 인터페이스",
@@ -55,8 +61,7 @@ const models: Record<string, any> = {
   a7c2: {
     name: "α7C II",
     identity: "가볍게 시작하는 풀프레임",
-    image:
-      "https://images.unsplash.com/photo-1758613655205-d9bcdba2404d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+    image: sonyA7C2,
     reasons: [
       "가볍게 들고 다니기 좋음",
       "AI 눈 AF로 초점 실패 방지",
@@ -67,8 +72,7 @@ const models: Record<string, any> = {
   a7cr: {
     name: "α7CR",
     identity: "작고 강한 고화질 선택",
-    image:
-      "https://images.unsplash.com/photo-1758613655205-d9bcdba2404d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+    image: sonyA7CR,
     reasons: [
       "61MP 고해상도 이미지",
       "컴팩트 바디에 최고 화질",
@@ -79,16 +83,14 @@ const models: Record<string, any> = {
   a7m4: {
     name: "α7 IV",
     identity: "가장 균형 잡힌 올라운드",
-    image:
-      "https://images.unsplash.com/photo-1761896895290-c2a2b5f4c862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+    image: sonyA7M4,
     reasons: ["사진과 영상 모두 강력함", "33MP 고해상도", "4K 60p 영상 촬영 가능"],
     lens: "FE 24-70mm F2.8 GM II",
   },
   a7m5: {
     name: "α7 V",
     identity: "최신 AI 프로세서 탑재",
-    image:
-      "https://images.unsplash.com/photo-1761896895290-c2a2b5f4c862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+    image: sonyA7M5,
     reasons: [
       "차세대 AI 피사체 인식",
       "8K 영상 촬영 지원",
@@ -99,8 +101,7 @@ const models: Record<string, any> = {
   a7r5: {
     name: "α7R V",
     identity: "최고 성능의 고화질 선택",
-    image:
-      "https://images.unsplash.com/photo-1758613655205-d9bcdba2404d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+    image: sonyA7R5,
     reasons: [
       "61MP 프로페셔널 화질",
       "AI 기반 자동 초점",
@@ -518,13 +519,16 @@ export function RecommendationQuizPage() {
             >
               {/* Result Card */}
               <div
-                className="rounded-3xl mb-5 relative overflow-hidden flex-shrink-0"
+                className="rounded-[32px] mb-6 relative overflow-hidden flex-shrink-0"
                 style={{
-                  background: "#ffffff",
-                  padding: "32px",
+                  background: "linear-gradient(135deg, rgba(26,21,44,0.7) 0%, rgba(8,5,17,0.85) 100%)",
+                  border: "1px solid rgba(255, 255, 255, 0.12)",
+                  backdropFilter: "blur(24px)",
+                  boxShadow: "0 30px 60px -15px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.08)",
+                  padding: "40px",
                 }}
               >
-                {/* Decorative gradient */}
+                {/* Decorative radial gradient */}
                 <div
                   className="absolute top-0 right-0 pointer-events-none"
                   style={{
@@ -537,7 +541,7 @@ export function RecommendationQuizPage() {
 
                 <div className="relative">
                   {/* Header row */}
-                  <div className="flex items-center justify-between mb-5">
+                  <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-4">
                       {(() => {
                         const profile = profiles.find(
@@ -566,18 +570,18 @@ export function RecommendationQuizPage() {
                             <div>
                               <p
                                 style={{
-                                  fontSize: "16px",
-                                  color: "#9ca3af",
+                                  fontSize: "14px",
+                                  color: "rgba(255, 255, 255, 0.4)",
                                   fontFamily: "var(--font-body)",
                                 }}
                               >
-                                선택한 프로필
+                                나만을 위한 추천 프로필
                               </p>
                               <p
                                 style={{
-                                  fontSize: "22px",
+                                  fontSize: "20px",
                                   fontWeight: "700",
-                                  color: "#080511",
+                                  color: "#ffffff",
                                   fontFamily: "var(--font-headline)",
                                 }}
                               >
@@ -591,120 +595,159 @@ export function RecommendationQuizPage() {
                     <div className="text-right">
                       <p
                         style={{
-                          fontSize: "18px",
-                          color: "#9ca3af",
+                          fontSize: "14px",
+                          color: "rgba(255, 255, 255, 0.4)",
                           fontFamily: "var(--font-body)",
                         }}
                       >
-                        2026.05.08
+                        {new Date().toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" }).replace(/\s/g, "")}
                       </p>
                       <p
                         style={{
-                          fontSize: "20px",
+                          fontSize: "18px",
                           fontWeight: "600",
-                          color: "#6b7280",
+                          color: "rgba(255, 255, 255, 0.7)",
                           fontFamily: "var(--font-body)",
                         }}
                       >
-                        Sony α7 팝업스토어
+                        Sony α Kiosk
                       </p>
                     </div>
                   </div>
 
                   {/* Main content: 3 columns */}
                   <div
-                    className="grid gap-6"
-                    style={{ gridTemplateColumns: "1fr auto auto" }}
+                    className="grid gap-8 items-stretch"
+                    style={{ gridTemplateColumns: "280px 1fr 200px" }}
                   >
-                    {/* Left: model info + reasons */}
-                    <div>
-                      <div className="flex items-center gap-3 mb-3">
-                        <Camera
-                          style={{
-                            width: "22px",
-                            height: "22px",
-                            color: "#080511",
-                          }}
+                    {/* Left: Showcase Stage */}
+                    <div
+                      className="rounded-2xl flex items-center justify-center relative overflow-hidden"
+                      style={{
+                        background: "radial-gradient(circle at center, rgba(231,83,0,0.15) 0%, rgba(8,5,17,0.4) 100%)",
+                        border: "1px solid rgba(255, 255, 255, 0.06)",
+                        padding: "24px",
+                        height: "300px",
+                      }}
+                    >
+                      {/* Glow backdrop */}
+                      <div
+                        className="absolute rounded-full pointer-events-none"
+                        style={{
+                          width: "200px",
+                          height: "200px",
+                          background: "radial-gradient(circle, rgba(231,83,0,0.18) 0%, rgba(231,83,0,0) 70%)",
+                          filter: "blur(20px)",
+                        }}
+                      />
+
+                      <motion.div
+                        animate={{ y: [0, -8, 0] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        className="aspect-square flex items-center justify-center w-full max-w-[220px]"
+                        style={{ zIndex: 2 }}
+                      >
+                        <ImageWithFallback
+                          src={recommendedModel.image}
+                          alt={recommendedModel.name}
+                          className="w-full h-full object-contain"
                         />
-                        <h2
+                      </motion.div>
+                    </div>
+
+                    {/* Center: Model info + reasons + lens */}
+                    <div className="flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center gap-3 mb-2">
+                          <Camera
+                            style={{
+                              width: "24px",
+                              height: "24px",
+                              color: "#E75300",
+                            }}
+                          />
+                          <h2
+                            style={{
+                              fontSize: "48px",
+                              fontWeight: "800",
+                              color: "#ffffff",
+                              fontFamily: "var(--font-headline)",
+                              letterSpacing: "-0.02em",
+                              lineHeight: "1.1",
+                            }}
+                          >
+                            {recommendedModel.name}
+                          </h2>
+                        </div>
+                        <p
                           style={{
-                            fontSize: "60px",
-                            fontWeight: "800",
-                            color: "#080511",
-                            fontFamily: "var(--font-headline)",
-                            letterSpacing: "-0.02em",
-                            lineHeight: "1.0",
+                            fontSize: "18px",
+                            fontWeight: "600",
+                            color: "#E8B49A",
+                            marginBottom: "16px",
+                            fontFamily: "var(--font-body)",
                           }}
                         >
-                          {recommendedModel.name}
-                        </h2>
-                      </div>
-                      <p
-                        style={{
-                          fontSize: "22px",
-                          fontWeight: "600",
-                          color: "#E75300",
-                          marginBottom: "20px",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
-                        {recommendedModel.identity}
-                      </p>
+                          {recommendedModel.identity}
+                        </p>
 
-                      {/* Reasons */}
-                      <div style={{ marginBottom: "20px" }}>
-                        {recommendedModel.reasons.map(
-                          (reason: string, idx: number) => (
-                            <div
-                              key={idx}
-                              className="flex items-start gap-3"
-                              style={{ marginBottom: "10px" }}
-                            >
+                        {/* Reasons */}
+                        <div style={{ marginBottom: "16px" }}>
+                          {recommendedModel.reasons.map(
+                            (reason: string, idx: number) => (
                               <div
-                                className="rounded-full flex items-center justify-center flex-shrink-0"
-                                style={{
-                                  width: "26px",
-                                  height: "26px",
-                                  background: "#080511",
-                                  marginTop: "2px",
-                                }}
+                                key={idx}
+                                className="flex items-start gap-3"
+                                style={{ marginBottom: "8px" }}
                               >
-                                <Check
+                                <div
+                                  className="rounded-full flex items-center justify-center flex-shrink-0"
                                   style={{
-                                    width: "13px",
-                                    height: "13px",
-                                    color: "#ffffff",
+                                    width: "26px",
+                                    height: "26px",
+                                    background: "rgba(231, 83, 0, 0.15)",
+                                    border: "1px solid rgba(231, 83, 0, 0.4)",
+                                    marginTop: "2px",
                                   }}
-                                />
+                                >
+                                  <Check
+                                    style={{
+                                      width: "12px",
+                                      height: "12px",
+                                      color: "#E75300",
+                                    }}
+                                  />
+                                </div>
+                                <p
+                                  style={{
+                                    fontSize: "16px",
+                                    fontWeight: "500",
+                                    color: "rgba(255, 255, 255, 0.85)",
+                                    fontFamily: "var(--font-body)",
+                                  }}
+                                >
+                                  {reason}
+                                </p>
                               </div>
-                              <p
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "500",
-                                  color: "#374151",
-                                  fontFamily: "var(--font-body)",
-                                }}
-                              >
-                                {reason}
-                              </p>
-                            </div>
-                          )
-                        )}
+                            )
+                          )}
+                        </div>
                       </div>
 
                       {/* Lens recommendation */}
                       <div
                         className="rounded-2xl"
                         style={{
-                          background: "#f3f4f6",
-                          padding: "16px 20px",
+                          background: "linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
+                          border: "1px solid rgba(255,255,255,0.08)",
+                          padding: "12px 18px",
                         }}
                       >
                         <p
                           style={{
-                            fontSize: "14px",
-                            color: "#9ca3af",
-                            marginBottom: "4px",
+                            fontSize: "13px",
+                            color: "rgba(255, 255, 255, 0.4)",
+                            marginBottom: "2px",
                             fontFamily: "var(--font-body)",
                           }}
                         >
@@ -712,9 +755,9 @@ export function RecommendationQuizPage() {
                         </p>
                         <p
                           style={{
-                            fontSize: "20px",
+                            fontSize: "18px",
                             fontWeight: "700",
-                            color: "#080511",
+                            color: "#ffffff",
                             fontFamily: "var(--font-headline)",
                           }}
                         >
@@ -723,49 +766,28 @@ export function RecommendationQuizPage() {
                       </div>
                     </div>
 
-                    {/* Center: Product Image */}
-                    <div
-                      className="rounded-2xl flex items-center justify-center"
-                      style={{
-                        width: "200px",
-                        background: "#f3f4f6",
-                        padding: "20px",
-                        alignSelf: "start",
-                      }}
-                    >
-                      <div
-                        className="aspect-square"
-                        style={{ width: "160px" }}
-                      >
-                        <ImageWithFallback
-                          src={recommendedModel.image}
-                          alt={recommendedModel.name}
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                    </div>
-
                     {/* Right: QR Code */}
                     <div
-                      className="rounded-2xl flex flex-col items-center"
+                      className="rounded-2xl flex flex-col items-center justify-between"
                       style={{
                         width: "200px",
-                        background: "#080511",
-                        padding: "20px",
-                        alignSelf: "start",
+                        background: "rgba(8, 5, 17, 0.5)",
+                        border: "1px solid rgba(255, 255, 255, 0.08)",
+                        padding: "16px",
+                        alignSelf: "stretch",
                       }}
                     >
-                      <div className="flex items-center gap-2 mb-3">
+                      <div className="flex items-center gap-2">
                         <Download
                           style={{
-                            width: "18px",
-                            height: "18px",
+                            width: "16px",
+                            height: "16px",
                             color: "#E75300",
                           }}
                         />
                         <p
                           style={{
-                            fontSize: "16px",
+                            fontSize: "15px",
                             fontWeight: "700",
                             color: "#ffffff",
                             fontFamily: "var(--font-headline)",
@@ -775,25 +797,26 @@ export function RecommendationQuizPage() {
                         </p>
                       </div>
                       <div
-                        className="rounded-xl flex items-center justify-center mb-3"
+                        className="rounded-xl flex items-center justify-center"
                         style={{
                           background: "#ffffff",
-                          width: "140px",
-                          height: "140px",
+                          width: "120px",
+                          height: "120px",
+                          boxShadow: "0 10px 20px rgba(0,0,0,0.3)",
                         }}
                       >
                         <div
                           className="flex items-center justify-center rounded-lg"
                           style={{
-                            width: "100px",
-                            height: "100px",
+                            width: "90px",
+                            height: "90px",
                             background: "#080511",
                           }}
                         >
                           <QrCode
                             style={{
-                              width: "60px",
-                              height: "60px",
+                              width: "50px",
+                              height: "50px",
                               color: "#ffffff",
                             }}
                           />
@@ -801,10 +824,10 @@ export function RecommendationQuizPage() {
                       </div>
                       <p
                         style={{
-                          fontSize: "14px",
+                          fontSize: "12px",
                           color: "rgba(255,255,255,0.4)",
                           fontFamily: "var(--font-body)",
-                          lineHeight: "1.5",
+                          lineHeight: "1.4",
                           textAlign: "center",
                         }}
                       >

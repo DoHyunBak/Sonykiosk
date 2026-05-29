@@ -1,6 +1,12 @@
 import { useNavigate } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Weight, ChevronRight } from "lucide-react";
+import sonyA7C from "../../imports/sony_a7c.png";
+import sonyA7C2 from "../../imports/sony_a7c2.png";
+import sonyA7CR from "../../imports/sony_a7cr.png";
+import sonyA7M4 from "../../imports/sony_a7m4.png";
+import sonyA7M5 from "../../imports/sony_a7m5.png";
+import sonyA7R5 from "../../imports/sony_a7r5.png";
 
 function getTagStyle(useCase: string) {
   switch (useCase) {
@@ -29,8 +35,7 @@ export function LineupPage() {
       weight: "509g",
       useCases: ["여행", "일상", "입문", "브이로그"],
       hasAI: false,
-      image:
-        "https://images.unsplash.com/photo-1722842179085-5423886195ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7C,
       description: "가장 가벼운 풀프레임 입문기",
       location: "A-1구역",
       locationDetail: "메인 입구 왼쪽 첫 번째 체험대 (A-1)",
@@ -43,8 +48,7 @@ export function LineupPage() {
       weight: "514g",
       useCases: ["여행", "일상", "브이로그", "인물"],
       hasAI: true,
-      image:
-        "https://images.unsplash.com/photo-1722842179085-5423886195ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7C2,
       description: "컴팩트한 바디에 강력한 AI AF",
       location: "A-2구역",
       locationDetail: "메인 입구 왼쪽 두 번째 체험대 (A-2)",
@@ -57,8 +61,7 @@ export function LineupPage() {
       weight: "515g",
       useCases: ["인물", "풍경", "고화질", "여행"],
       hasAI: true,
-      image:
-        "https://images.unsplash.com/photo-1722842179085-5423886195ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7CR,
       description: "61MP 고해상도를 컴팩트 바디에",
       location: "B-1구역",
       locationDetail: "매장 중앙 메인 체험존 앞쪽 (B-1)",
@@ -71,8 +74,7 @@ export function LineupPage() {
       weight: "658g",
       useCases: ["일상", "인물", "사진+영상", "여행"],
       hasAI: false,
-      image:
-        "https://images.unsplash.com/photo-1722910122446-670593671b63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7M4,
       description: "모든 분야에서 뛰어난 성능",
       location: "B-2구역",
       locationDetail: "매장 중앙 메인 체험존 뒤쪽 (B-2)",
@@ -85,8 +87,7 @@ export function LineupPage() {
       weight: "659g",
       useCases: ["영상", "인물", "AI 추적", "프로"],
       hasAI: true,
-      image:
-        "https://images.unsplash.com/photo-1761896895290-c2a2b5f4c862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7M5,
       description: "차세대 AI 성능의 정점",
       location: "C-1구역",
       locationDetail: "우측 프리미엄존 앞쪽 체험대 (C-1)",
@@ -99,8 +100,7 @@ export function LineupPage() {
       weight: "723g",
       useCases: ["전문가", "고화질", "상업", "풍경"],
       hasAI: true,
-      image:
-        "https://images.unsplash.com/photo-1758613655205-d9bcdba2404d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7R5,
       description: "61MP 고해상도 프로페셔널",
       location: "C-2구역",
       locationDetail: "우측 프리미엄존 뒤쪽 체험대 (C-2)",

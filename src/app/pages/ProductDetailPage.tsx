@@ -2,6 +2,12 @@ import { useParams, useNavigate } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Users, Weight, Zap, MapPin, X } from "lucide-react";
 import { useState } from "react";
+import sonyA7C from "../../imports/sony_a7c.png";
+import sonyA7C2 from "../../imports/sony_a7c2.png";
+import sonyA7CR from "../../imports/sony_a7cr.png";
+import sonyA7M4 from "../../imports/sony_a7m4.png";
+import sonyA7M5 from "../../imports/sony_a7m5.png";
+import sonyA7R5 from "../../imports/sony_a7r5.png";
 
 function getTagStyle(useCase: string) {
   switch (useCase) {
@@ -29,8 +35,7 @@ export function ProductDetailPage() {
       name: "α7C",
       identity: "소니 입문, 가볍게 시작",
       hasAI: false,
-      image:
-        "https://images.unsplash.com/photo-1722842179085-5423886195ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7C,
       lifestyleImage:
         "https://images.unsplash.com/photo-1733515671287-68f8118c4fed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
       useCases: ["여행", "일상", "입문", "브이로그"],
@@ -59,8 +64,7 @@ export function ProductDetailPage() {
       name: "α7C II",
       identity: "가볍게 시작하는 풀프레임",
       hasAI: true,
-      image:
-        "https://images.unsplash.com/photo-1758613655205-d9bcdba2404d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7C2,
       lifestyleImage:
         "https://images.unsplash.com/photo-1733515671287-68f8118c4fed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
       useCases: ["여행", "일상", "브이로그", "인물"],
@@ -89,8 +93,7 @@ export function ProductDetailPage() {
       name: "α7CR",
       identity: "작고 강한 고화질 선택",
       hasAI: true,
-      image:
-        "https://images.unsplash.com/photo-1758613655205-d9bcdba2404d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7CR,
       lifestyleImage:
         "https://images.unsplash.com/photo-1728413704912-55beeee843ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
       useCases: ["인물", "풍경", "고화질", "여행"],
@@ -119,8 +122,7 @@ export function ProductDetailPage() {
       name: "α7 IV",
       identity: "가장 균형 잡힌 올라운드",
       hasAI: false,
-      image:
-        "https://images.unsplash.com/photo-1761896895290-c2a2b5f4c862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7M4,
       lifestyleImage:
         "https://images.unsplash.com/photo-1773397298290-05856f1dbfd2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
       useCases: ["일상", "인물", "사진+영상", "여행"],
@@ -149,8 +151,7 @@ export function ProductDetailPage() {
       name: "α7 V",
       identity: "최신 AI 프로세서 탑재",
       hasAI: true,
-      image:
-        "https://images.unsplash.com/photo-1761896895290-c2a2b5f4c862?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7M5,
       lifestyleImage:
         "https://images.unsplash.com/photo-1773397298290-05856f1dbfd2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
       useCases: ["영상", "인물", "AI 추적", "프로"],
@@ -179,8 +180,7 @@ export function ProductDetailPage() {
       name: "α7R V",
       identity: "최고 성능의 고화질 선택",
       hasAI: true,
-      image:
-        "https://images.unsplash.com/photo-1758613655205-d9bcdba2404d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+      image: sonyA7R5,
       lifestyleImage:
         "https://images.unsplash.com/photo-1728413704912-55beeee843ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
       useCases: ["전문가", "고화질", "상업", "풍경"],
