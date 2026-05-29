@@ -1,65 +1,90 @@
-import { useState } from "react";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { Play, Pause, AlertCircle, CheckCircle, Eye, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { AlertCircle, CheckCircle, Eye } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 const scenarios = [
   {
     name: "아이",
-    image:
+    video:
+      "https://videos.pexels.com/video-files/3048208/3048208-hd_1280_720_25fps.mp4",
+    poster:
       "https://images.unsplash.com/photo-1774688169127-116828465174?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
     problem: "아이가 계속 움직여서 초점이 안 맞아요",
-    beginnerFail: "셔터를 누를 때마다 초점을 다시 잡아야 합니다",
-    sonySolution:
-      "소니 AI 눈 AF는 아이의 눈을 자동으로 인식하고 계속 추적합니다",
-    recommendedCamera: "α7C II, α7 IV",
-    description: "빠르게 움직이는 아이의 눈을 정확히 추적합니다",
+    fail: "셔터를 누를 때마다 초점을 다시 잡아야 합니다",
+    solution: "소니 AI 눈 AF는 아이의 눈을 자동으로 인식하고 계속 추적합니다",
+    path: [
+      { x: 44, y: 36 },
+      { x: 53, y: 30 },
+      { x: 38, y: 43 },
+      { x: 57, y: 34 },
+      { x: 42, y: 27 },
+    ],
   },
   {
     name: "반려동물",
-    image:
+    video:
+      "https://videos.pexels.com/video-files/4373038/4373038-hd_1280_720_30fps.mp4",
+    poster:
       "https://images.unsplash.com/photo-1762814305990-712bcd48f2ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
     problem: "강아지가 너무 빨라서 흔들린 사진만 나와요",
-    beginnerFail: "동물이 갑자기 움직이면 초점이 배경으로 빠집니다",
-    sonySolution: "동물 눈 인식 AF로 개와 고양이의 눈을 자동 추적합니다",
-    recommendedCamera: "α7 IV, α7R V",
-    description: "예측 불가능한 반려동물의 움직임도 놓치지 않습니다",
+    fail: "동물이 갑자기 움직이면 초점이 배경으로 빠집니다",
+    solution: "동물 눈 인식 AF로 개와 고양이의 눈을 자동 추적합니다",
+    path: [
+      { x: 34, y: 44 },
+      { x: 60, y: 38 },
+      { x: 42, y: 30 },
+      { x: 63, y: 46 },
+      { x: 35, y: 50 },
+    ],
   },
   {
     name: "공연",
-    image:
+    video:
+      "https://videos.pexels.com/video-files/2792369/2792369-hd_1280_720_30fps.mp4",
+    poster:
       "https://images.unsplash.com/photo-1765224747170-be7b97010052?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
     problem: "어두운 무대에서 초점이 계속 헤매요",
-    beginnerFail: "조명이 바뀔 때마다 초점이 흔들립니다",
-    sonySolution:
-      "최대 -4EV 저조도 AF로 어두운 환경에서도 빠르고 정확합니다",
-    recommendedCamera: "α7 IV, α7R V",
-    description: "어두운 무대에서도 정확한 초점을 유지합니다",
+    fail: "조명이 바뀔 때마다 초점이 흔들립니다",
+    solution: "최대 -4EV 저조도 AF로 어두운 환경에서도 빠르고 정확합니다",
+    path: [
+      { x: 50, y: 40 },
+      { x: 44, y: 35 },
+      { x: 57, y: 43 },
+      { x: 48, y: 33 },
+    ],
   },
   {
     name: "야간 거리",
-    image:
+    video:
+      "https://videos.pexels.com/video-files/3168752/3168752-hd_1280_720_30fps.mp4",
+    poster:
       "https://images.unsplash.com/photo-1696798637345-6e58432ca556?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
     problem: "밤에는 초점이 아예 안 잡혀요",
-    beginnerFail: "어두우면 AF가 작동하지 않거나 느립니다",
-    sonySolution: "693개 위상차 AF 포인트가 화면 전체를 커버합니다",
-    recommendedCamera: "α7C II, α7 IV, α7R V",
-    description: "어두운 밤거리에서도 빠른 초점을 제공합니다",
+    fail: "어두우면 AF가 작동하지 않거나 느립니다",
+    solution: "693개 위상차 AF 포인트가 화면 전체를 커버합니다",
+    path: [
+      { x: 38, y: 42 },
+      { x: 55, y: 36 },
+      { x: 46, y: 46 },
+      { x: 59, y: 40 },
+    ],
   },
 ];
 
 export function AFExperiencePage() {
   const [activeTab, setActiveTab] = useState(0);
-  const [showExplanation, setShowExplanation] = useState(false);
-  const [isTracking, setIsTracking] = useState(false);
+  const [trackIdx, setTrackIdx] = useState(0);
 
-  const currentScenario = scenarios[activeTab];
+  const scene = scenarios[activeTab];
+  const pos = scene.path[trackIdx];
 
-  const handleTabChange = (idx: number) => {
-    setActiveTab(idx);
-    setShowExplanation(false);
-    setIsTracking(false);
-  };
+  useEffect(() => {
+    setTrackIdx(0);
+    const id = setInterval(() => {
+      setTrackIdx((p) => (p + 1) % scene.path.length);
+    }, 1800);
+    return () => clearInterval(id);
+  }, [activeTab, scene.path.length]);
 
   return (
     <div
@@ -70,60 +95,12 @@ export function AFExperiencePage() {
         className="h-full flex flex-col overflow-hidden"
         style={{ padding: "4px 36px 32px" }}
       >
-        {/* Hero Feature Banner */}
-        <div
-          className="rounded-2xl flex items-start gap-6 mb-5 flex-shrink-0"
-          style={{
-            background: "#080511",
-            border: "1px solid rgba(91,54,244,0.3)",
-            padding: "24px 28px",
-          }}
-        >
-          <div
-            className="rounded-2xl flex items-center justify-center flex-shrink-0"
-            style={{
-              width: "64px",
-              height: "64px",
-              background: "rgba(91,54,244,0.15)",
-              border: "1px solid rgba(91,54,244,0.3)",
-            }}
-          >
-            <Eye style={{ width: "30px", height: "30px", color: "#5B36F4" }} />
-          </div>
-          <div>
-            <h2
-              style={{
-                fontSize: "28px",
-                fontWeight: "700",
-                letterSpacing: "-0.02em",
-                color: "#ffffff",
-                fontFamily: "var(--font-headline)",
-                lineHeight: "1.3",
-                marginBottom: "8px",
-              }}
-            >
-              눈 추적 자동초점 (Eye Tracking AF)
-            </h2>
-            <p
-              style={{
-                fontSize: "20px",
-                color: "rgba(255,255,255,0.65)",
-                fontFamily: "var(--font-body)",
-                lineHeight: "1.5",
-              }}
-            >
-              피사체의 눈을 실시간으로 감지하고 추적하여 항상 눈에 정확한
-              초점을 유지합니다
-            </p>
-          </div>
-        </div>
-
-        {/* Scenario Tabs */}
+        {/* Tabs */}
         <div className="grid grid-cols-4 gap-3 mb-5 flex-shrink-0">
-          {scenarios.map((scenario, idx) => (
+          {scenarios.map((s, idx) => (
             <button
               key={idx}
-              onClick={() => handleTabChange(idx)}
+              onClick={() => setActiveTab(idx)}
               className="rounded-2xl transition-all duration-200"
               style={{
                 padding: "16px 20px",
@@ -135,326 +112,222 @@ export function AFExperiencePage() {
                 color: activeTab === idx ? "#ffffff" : "rgba(255,255,255,0.6)",
               }}
             >
-              {scenario.name}
+              {s.name}
             </button>
           ))}
         </div>
 
-        <div className="flex flex-col flex-1 overflow-hidden gap-5">
-          {/* Scene Image */}
+        <div className="flex flex-col flex-1 overflow-hidden gap-4">
+          {/* Video with AF tracking */}
           <div
             className="w-full relative rounded-2xl overflow-hidden flex-shrink-0"
             style={{ height: "420px" }}
           >
-            <ImageWithFallback
-              src={currentScenario.image}
-              alt={currentScenario.name}
-              className="w-full h-full object-cover"
-            />
+            <AnimatePresence mode="wait">
+              <motion.video
+                key={activeTab}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.35 }}
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={scene.poster}
+                className="w-full h-full object-cover"
+                style={{ display: "block" }}
+              >
+                <source src={scene.video} type="video/mp4" />
+              </motion.video>
+            </AnimatePresence>
 
-            {/* Label overlay */}
+            {/* Status badge */}
             <div
               className="absolute top-5 left-5 rounded-xl flex items-center gap-3"
               style={{
-                background: "rgba(0,0,0,0.65)",
-                backdropFilter: "blur(8px)",
-                padding: "10px 20px",
-                border: "1px solid rgba(255,255,255,0.15)",
+                background: "rgba(0,0,0,0.6)",
+                backdropFilter: "blur(10px)",
+                padding: "10px 18px",
+                border: "1px solid rgba(255,255,255,0.12)",
               }}
             >
-              <Eye
-                style={{ width: "20px", height: "20px", color: "#5B36F4" }}
-              />
+              <Eye style={{ width: "18px", height: "18px", color: "#E75300" }} />
               <span
                 style={{
-                  fontSize: "18px",
+                  fontSize: "16px",
                   fontWeight: "600",
                   color: "#ffffff",
                   fontFamily: "var(--font-body)",
                 }}
               >
-                눈 추적 자동초점
+                AI Eye Tracking AF
               </span>
+              <motion.div
+                animate={{ opacity: [1, 0.15, 1] }}
+                transition={{ duration: 1.1, repeat: Infinity }}
+                style={{
+                  width: "7px",
+                  height: "7px",
+                  borderRadius: "50%",
+                  background: "#E75300",
+                  flexShrink: 0,
+                }}
+              />
             </div>
 
-            {/* Hotspot overlay */}
-            {!showExplanation && (
-              <button
-                onClick={() => setShowExplanation(true)}
-                className="absolute inset-0 flex items-center justify-center transition-all"
-                style={{ background: "rgba(0,0,0,0.35)" }}
-              >
+            {/* Animated AF tracking box */}
+            <motion.div
+              animate={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+              transition={{ type: "spring", stiffness: 90, damping: 18 }}
+              className="absolute pointer-events-none"
+              style={{
+                width: "130px",
+                height: "130px",
+                marginLeft: "-65px",
+                marginTop: "-65px",
+              }}
+            >
+              {/* Corner marks */}
+              {[
+                { top: 0, left: 0, borderTop: "2px solid #E75300", borderLeft: "2px solid #E75300" },
+                { top: 0, right: 0, borderTop: "2px solid #E75300", borderRight: "2px solid #E75300" },
+                { bottom: 0, left: 0, borderBottom: "2px solid #E75300", borderLeft: "2px solid #E75300" },
+                { bottom: 0, right: 0, borderBottom: "2px solid #E75300", borderRight: "2px solid #E75300" },
+              ].map((c, i) => (
                 <div
-                  className="flex items-center gap-4 rounded-2xl"
+                  key={i}
+                  className="absolute"
+                  style={{ ...c, width: "18px", height: "18px" }}
+                />
+              ))}
+
+              {/* Center crosshair dot */}
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                style={{ width: "5px", height: "5px", background: "#E75300" }}
+              />
+
+              {/* Label */}
+              <div
+                className="absolute -bottom-7 left-1/2 -translate-x-1/2 rounded-md whitespace-nowrap"
+                style={{
+                  background: "#E75300",
+                  color: "#ffffff",
+                  padding: "3px 10px",
+                  fontSize: "12px",
+                  fontWeight: "700",
+                  fontFamily: "var(--font-body)",
+                }}
+              >
+                눈 인식 중
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Problem / Solution cards */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex gap-4 flex-1"
+            >
+              {/* Problem */}
+              <div
+                className="flex-1 rounded-2xl flex flex-col gap-3"
+                style={{
+                  background: "rgba(212,24,61,0.07)",
+                  border: "1px solid rgba(212,24,61,0.18)",
+                  padding: "24px",
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <AlertCircle
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      color: "#ff6b6b",
+                      flexShrink: 0,
+                    }}
+                  />
+                  <h3
+                    style={{
+                      fontSize: "18px",
+                      fontWeight: "700",
+                      color: "#ff9999",
+                      fontFamily: "var(--font-headline)",
+                    }}
+                  >
+                    일반적인 문제
+                  </h3>
+                </div>
+                <p
                   style={{
-                    background: "rgba(255,255,255,0.95)",
-                    color: "#080511",
-                    padding: "20px 36px",
-                    fontSize: "22px",
-                    fontWeight: "700",
+                    fontSize: "20px",
+                    color: "rgba(255,255,255,0.85)",
+                    lineHeight: "1.6",
                     fontFamily: "var(--font-body)",
                   }}
                 >
-                  <AlertCircle style={{ width: "24px", height: "24px" }} />
-                  이런 상황에서는?
-                </div>
-              </button>
-            )}
-
-            {/* AF Tracking Overlay */}
-            {isTracking && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="relative"
+                  {scene.problem}
+                </p>
+                <p
                   style={{
-                    width: "220px",
-                    height: "220px",
-                    border: "3px solid #E75300",
-                    borderRadius: "16px",
+                    fontSize: "17px",
+                    color: "rgba(255,255,255,0.45)",
+                    lineHeight: "1.5",
+                    fontFamily: "var(--font-body)",
                   }}
                 >
-                  {[
-                    { top: -6, left: -6 },
-                    { top: -6, right: -6 },
-                    { bottom: -6, left: -6 },
-                    { bottom: -6, right: -6 },
-                  ].map((pos, i) => (
-                    <div
-                      key={i}
-                      className="absolute"
-                      style={{
-                        ...pos,
-                        width: "16px",
-                        height: "16px",
-                        background: "#E75300",
-                      }}
-                    />
-                  ))}
-                  <div
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl"
-                    style={{
-                      background: "#E75300",
-                      color: "#ffffff",
-                      padding: "10px 20px",
-                      fontSize: "16px",
-                      fontWeight: "700",
-                      whiteSpace: "nowrap",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    눈 AF 추적 중
-                  </div>
-                </motion.div>
+                  {scene.fail}
+                </p>
               </div>
-            )}
-          </div>
 
-          {/* Info Panel */}
-          <div className="flex-1 overflow-hidden">
-            <AnimatePresence mode="wait">
-              {!showExplanation ? (
-                <motion.div
-                  key="initial"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="h-full flex items-center justify-center rounded-2xl"
+              {/* Solution */}
+              <div
+                className="flex-1 rounded-2xl flex flex-col gap-3"
+                style={{
+                  background: "rgba(34,197,94,0.07)",
+                  border: "1px solid rgba(34,197,94,0.18)",
+                  padding: "24px",
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <CheckCircle
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      color: "#4ade80",
+                      flexShrink: 0,
+                    }}
+                  />
+                  <h3
+                    style={{
+                      fontSize: "18px",
+                      fontWeight: "700",
+                      color: "#86efac",
+                      fontFamily: "var(--font-headline)",
+                    }}
+                  >
+                    소니 α7 시리즈
+                  </h3>
+                </div>
+                <p
                   style={{
-                    background: "#080511",
-                    border: "1px solid rgba(255,255,255,0.1)",
+                    fontSize: "20px",
+                    color: "rgba(255,255,255,0.85)",
+                    lineHeight: "1.6",
+                    fontFamily: "var(--font-body)",
                   }}
                 >
-                  <div className="text-center">
-                    <p
-                      style={{
-                        fontSize: "22px",
-                        color: "rgba(255,255,255,0.4)",
-                        fontFamily: "var(--font-body)",
-                      }}
-                    >
-                      장면을 선택하고 위 이미지를 눌러보세요
-                    </p>
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="explanation"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="flex flex-col gap-4 h-full overflow-y-auto"
-                >
-                  {/* Close button */}
-                  <button
-                    onClick={() => {
-                      setShowExplanation(false);
-                      setIsTracking(false);
-                    }}
-                    className="self-end flex items-center gap-2 rounded-xl transition-all"
-                    style={{
-                      padding: "10px 20px",
-                      background: "rgba(255,255,255,0.07)",
-                      color: "rgba(255,255,255,0.5)",
-                      fontSize: "18px",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    <X style={{ width: "16px", height: "16px" }} />
-                    닫기
-                  </button>
-
-                  {/* Problem */}
-                  <div
-                    className="rounded-2xl flex items-start gap-5"
-                    style={{
-                      background: "rgba(212,24,61,0.08)",
-                      border: "1px solid rgba(212,24,61,0.2)",
-                      padding: "24px",
-                    }}
-                  >
-                    <AlertCircle
-                      style={{
-                        width: "26px",
-                        height: "26px",
-                        color: "#ff6b6b",
-                        flexShrink: 0,
-                        marginTop: "2px",
-                      }}
-                    />
-                    <div>
-                      <h3
-                        style={{
-                          fontSize: "22px",
-                          fontWeight: "700",
-                          color: "#ff9999",
-                          fontFamily: "var(--font-headline)",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        문제 상황
-                      </h3>
-                      <p
-                        style={{
-                          fontSize: "20px",
-                          color: "rgba(255,255,255,0.85)",
-                          lineHeight: "1.6",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
-                        {currentScenario.problem}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Beginner Fail */}
-                  <div
-                    className="rounded-2xl"
-                    style={{
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.1)",
-                      padding: "24px",
-                    }}
-                  >
-                    <h3
-                      style={{
-                        fontSize: "22px",
-                        fontWeight: "700",
-                        color: "rgba(255,255,255,0.45)",
-                        fontFamily: "var(--font-headline)",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      일반 카메라는
-                    </h3>
-                    <p
-                      style={{
-                        fontSize: "20px",
-                        color: "rgba(255,255,255,0.8)",
-                        lineHeight: "1.6",
-                        fontFamily: "var(--font-body)",
-                      }}
-                    >
-                      {currentScenario.beginnerFail}
-                    </p>
-                  </div>
-
-                  {/* Sony Solution */}
-                  <div
-                    className="rounded-2xl flex items-start gap-5"
-                    style={{
-                      background: "rgba(34,197,94,0.08)",
-                      border: "1px solid rgba(34,197,94,0.2)",
-                      padding: "24px",
-                    }}
-                  >
-                    <CheckCircle
-                      style={{
-                        width: "26px",
-                        height: "26px",
-                        color: "#4ade80",
-                        flexShrink: 0,
-                        marginTop: "2px",
-                      }}
-                    />
-                    <div>
-                      <h3
-                        style={{
-                          fontSize: "22px",
-                          fontWeight: "700",
-                          color: "#86efac",
-                          fontFamily: "var(--font-headline)",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        소니 α7 시리즈
-                      </h3>
-                      <p
-                        style={{
-                          fontSize: "20px",
-                          color: "rgba(255,255,255,0.85)",
-                          lineHeight: "1.6",
-                          fontFamily: "var(--font-body)",
-                        }}
-                      >
-                        {currentScenario.sonySolution}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* CTA */}
-                  <button
-                    onClick={() => setIsTracking(!isTracking)}
-                    className="w-full rounded-2xl flex items-center justify-center gap-4 transition-all"
-                    style={{
-                      height: "88px",
-                      fontSize: "24px",
-                      fontWeight: "700",
-                      fontFamily: "var(--font-body)",
-                      background: isTracking
-                        ? "rgba(212,24,61,0.8)"
-                        : "linear-gradient(135deg, #E75300 0%, #5B36F4 100%)",
-                      color: "#ffffff",
-                      border: "none",
-                    }}
-                  >
-                    {isTracking ? (
-                      <>
-                        <Pause style={{ width: "24px", height: "24px" }} />
-                        추적 중지
-                      </>
-                    ) : (
-                      <>
-                        <Play style={{ width: "24px", height: "24px" }} />
-                        AI AF 체험
-                      </>
-                    )}
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                  {scene.solution}
+                </p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </div>
