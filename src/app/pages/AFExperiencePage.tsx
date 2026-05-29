@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AlertCircle, CheckCircle, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 // ─────────────────────────────────────────────
@@ -16,11 +16,18 @@ const scenarios = [
     problem: "아이가 계속 움직여서 초점이 안 맞아요",
     fail: "셔터를 누를 때마다 초점을 다시 잡아야 합니다",
     solution: "소니 AI 눈 AF는 아이의 눈을 자동으로 인식하고 계속 추적합니다",
-    // TODO: 실제 영상 피사체 위치에 맞게 fine-tune 필요
+    // 아이가 좌우로 자연스럽게 움직이는 시뮬레이션 경로
     path: [
-      { x: 50, y: 40 },
-      { x: 50, y: 40 },
-      { x: 50, y: 40 },
+      { x: 50, y: 38 },
+      { x: 47, y: 37 },
+      { x: 44, y: 39 },
+      { x: 46, y: 36 },
+      { x: 50, y: 35 },
+      { x: 53, y: 37 },
+      { x: 56, y: 38 },
+      { x: 54, y: 40 },
+      { x: 51, y: 39 },
+      { x: 48, y: 38 },
     ],
   },
   {
@@ -30,11 +37,16 @@ const scenarios = [
     problem: "강아지가 너무 빨라서 흔들린 사진만 나와요",
     fail: "동물이 갑자기 움직이면 초점이 배경으로 빠집니다",
     solution: "동물 눈 인식 AF로 개와 고양이의 눈을 자동 추적합니다",
-    // TODO: 실제 영상 피사체 위치에 맞게 fine-tune 필요
+    // 반려동물이 빠르게 이리저리 뛰는 시뮬레이션 경로
     path: [
-      { x: 50, y: 40 },
-      { x: 50, y: 40 },
-      { x: 50, y: 40 },
+      { x: 50, y: 45 },
+      { x: 38, y: 42 },
+      { x: 30, y: 48 },
+      { x: 42, y: 44 },
+      { x: 55, y: 40 },
+      { x: 65, y: 46 },
+      { x: 58, y: 50 },
+      { x: 47, y: 43 },
     ],
   },
   {
@@ -44,11 +56,18 @@ const scenarios = [
     problem: "어두운 무대에서 초점이 계속 헤매요",
     fail: "조명이 바뀔 때마다 초점이 흔들립니다",
     solution: "최대 -4EV 저조도 AF로 어두운 환경에서도 빠르고 정확합니다",
-    // TODO: 실제 영상 피사체 위치에 맞게 fine-tune 필요
+    // 무대 위 공연자가 좌우로 이동하는 시뮬레이션 경로
     path: [
+      { x: 35, y: 40 },
+      { x: 38, y: 38 },
+      { x: 42, y: 39 },
+      { x: 47, y: 37 },
+      { x: 52, y: 38 },
+      { x: 58, y: 40 },
+      { x: 62, y: 39 },
+      { x: 57, y: 41 },
       { x: 50, y: 40 },
-      { x: 50, y: 40 },
-      { x: 50, y: 40 },
+      { x: 43, y: 39 },
     ],
   },
   {
@@ -58,11 +77,16 @@ const scenarios = [
     problem: "밤에는 초점이 아예 안 잡혀요",
     fail: "어두우면 AF가 작동하지 않거나 느립니다",
     solution: "693개 위상차 AF 포인트가 화면 전체를 커버합니다",
-    // TODO: 실제 영상 피사체 위치에 맞게 fine-tune 필요
+    // 야간 거리에서 천천히 드리프트하는 시뮬레이션 경로
     path: [
+      { x: 50, y: 42 },
+      { x: 51, y: 41 },
+      { x: 52, y: 40 },
+      { x: 51, y: 39 },
       { x: 50, y: 40 },
-      { x: 50, y: 40 },
-      { x: 50, y: 40 },
+      { x: 49, y: 41 },
+      { x: 48, y: 40 },
+      { x: 49, y: 39 },
     ],
   },
 ];
@@ -78,7 +102,7 @@ export function AFExperiencePage() {
     setTrackIdx(0);
     const id = setInterval(() => {
       setTrackIdx((p) => (p + 1) % scene.path.length);
-    }, 1800);
+    }, 900);
     return () => clearInterval(id);
   }, [activeTab, scene.path.length]);
 
@@ -113,11 +137,11 @@ export function AFExperiencePage() {
           ))}
         </div>
 
-        <div className="flex flex-col flex-shrink-0 gap-4">
+        <div className="flex flex-col flex-shrink-0">
           {/* Video with AF tracking */}
           <div
             className="w-full relative rounded-2xl overflow-hidden flex-shrink-0"
-            style={{ height: "520px" }}
+            style={{ height: "680px" }}
           >
             <AnimatePresence mode="wait">
               <motion.video
@@ -220,100 +244,6 @@ export function AFExperiencePage() {
               </div>
             </motion.div>
           </div>
-
-          {/* Problem / Solution cards — snug, no wasted space */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex gap-4 flex-shrink-0"
-            >
-              {/* Problem */}
-              <div
-                className="flex-1 rounded-2xl flex flex-col gap-2"
-                style={{
-                  background: "rgba(212,24,61,0.07)",
-                  border: "1px solid rgba(212,24,61,0.18)",
-                  padding: "16px 20px",
-                }}
-              >
-                <div className="flex items-center gap-2">
-                  <AlertCircle
-                    style={{ width: "17px", height: "17px", color: "#ff6b6b", flexShrink: 0 }}
-                  />
-                  <h3
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: "700",
-                      color: "#ff9999",
-                      fontFamily: "var(--font-headline)",
-                    }}
-                  >
-                    일반적인 문제
-                  </h3>
-                </div>
-                <p
-                  style={{
-                    fontSize: "19px",
-                    color: "rgba(255,255,255,0.85)",
-                    lineHeight: "1.55",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  {scene.problem}
-                </p>
-                <p
-                  style={{
-                    fontSize: "16px",
-                    color: "rgba(255,255,255,0.4)",
-                    lineHeight: "1.5",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  {scene.fail}
-                </p>
-              </div>
-
-              {/* Solution */}
-              <div
-                className="flex-1 rounded-2xl flex flex-col gap-2"
-                style={{
-                  background: "rgba(34,197,94,0.07)",
-                  border: "1px solid rgba(34,197,94,0.18)",
-                  padding: "16px 20px",
-                }}
-              >
-                <div className="flex items-center gap-2">
-                  <CheckCircle
-                    style={{ width: "17px", height: "17px", color: "#4ade80", flexShrink: 0 }}
-                  />
-                  <h3
-                    style={{
-                      fontSize: "16px",
-                      fontWeight: "700",
-                      color: "#86efac",
-                      fontFamily: "var(--font-headline)",
-                    }}
-                  >
-                    소니 α7 시리즈
-                  </h3>
-                </div>
-                <p
-                  style={{
-                    fontSize: "19px",
-                    color: "rgba(255,255,255,0.85)",
-                    lineHeight: "1.55",
-                    fontFamily: "var(--font-body)",
-                  }}
-                >
-                  {scene.solution}
-                </p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
         </div>
       </div>
     </div>
