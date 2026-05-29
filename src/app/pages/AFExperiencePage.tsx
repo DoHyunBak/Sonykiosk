@@ -68,7 +68,7 @@ export function AFExperiencePage() {
     >
       <div
         className="h-full flex flex-col overflow-hidden"
-        style={{ padding: "28px 36px 32px" }}
+        style={{ padding: "4px 36px 32px" }}
       >
         {/* Hero Feature Banner */}
         <div

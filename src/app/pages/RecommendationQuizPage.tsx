@@ -167,7 +167,7 @@ export function RecommendationQuizPage() {
     >
       <div
         className="h-full flex flex-col overflow-hidden"
-        style={{ padding: "32px 40px 36px" }}
+        style={{ padding: "4px 40px 36px" }}
       >
         {/* Step Indicator */}
         <div className="flex items-center gap-5 mb-8 flex-shrink-0">

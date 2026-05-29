@@ -34,8 +34,8 @@ export function Layout() {
 
         {/* ── Main Content ── */}
         <main
-          className="flex-1 overflow-y-auto overflow-x-hidden relative"
-          style={{ background: "#1A1A1F" }}
+          className="flex-1 overflow-hidden relative"
+          style={{ background: "#1A1A1F", paddingTop: "90px" }}
         >
           <Outlet />
         </main>

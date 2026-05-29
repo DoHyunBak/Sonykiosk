@@ -134,7 +134,7 @@ export function RecommendationResultPage() {
     >
       <div
         className="h-full flex flex-col justify-center overflow-hidden"
-        style={{ padding: "24px 36px 28px" }}
+        style={{ padding: "4px 36px 28px" }}
       >
         {/* Result Card */}
         <div

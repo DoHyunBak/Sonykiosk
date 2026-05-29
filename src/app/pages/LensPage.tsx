@@ -14,7 +14,7 @@ export function LensPage() {
     >
       <div
         className="h-full flex flex-col overflow-hidden"
-        style={{ padding: "36px 40px 36px" }}
+        style={{ padding: "8px 40px 36px" }}
       >
         {/* Hero Image */}
         <div
