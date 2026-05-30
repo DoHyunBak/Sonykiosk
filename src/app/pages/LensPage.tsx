@@ -1,6 +1,5 @@
 import { useRef, useEffect } from "react";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import lensBgImage from "../../imports/E마운트.png";
+import eMountVideo from "../../imports/e_mount.mp4";
 
 const brands = [
   { name: "Sony G Master", sub: "최고급 렌즈 라인 · 압도적 해상력 · 방진방습" },
@@ -122,18 +121,22 @@ export function LensPage() {
         background: "#050309",
       }}
     >
-      {/* 배경 이미지 */}
-      <ImageWithFallback
-        src={lensBgImage}
-        alt="소니 E-마운트 렌즈 생태계"
+      {/* 배경 동영상 */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 0.45 }}
-      />
+        style={{ opacity: 0.6 }}
+      >
+        <source src={eMountVideo} type="video/mp4" />
+      </video>
 
       {/* 짙은 오버레이 */}
       <div
         className="absolute inset-0"
-        style={{ background: "rgba(5, 3, 9, 0.7)" }}
+        style={{ background: "rgba(5, 3, 9, 0.55)" }}
       />
 
       {/* Main Content Layout */}

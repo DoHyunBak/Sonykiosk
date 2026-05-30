@@ -253,94 +253,72 @@ export function ProductDetailPage() {
           className="relative flex-shrink-0 flex items-end"
           style={{ padding: "56px 40px 24px" }}
         >
-          <div className="flex items-end gap-10 w-full">
+          <div className="flex items-stretch gap-10 w-full">
             {/* Product image */}
             <div
-              className="rounded-3xl flex items-center justify-center flex-shrink-0"
+              className="rounded-3xl flex items-center justify-center flex-shrink-0 overflow-hidden"
               style={{
-                width: "240px",
-                height: "240px",
+                width: "480px",
+                height: "480px",
                 background: "rgba(255,255,255,0.92)",
-                padding: "20px",
                 boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
               }}
             >
               <ImageWithFallback
                 src={product.image}
                 alt={product.name}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
+                style={{ objectPosition: "center" }}
               />
             </div>
 
             {/* Text info */}
-            <div style={{ paddingBottom: "4px", flex: 1 }}>
-              <div className="flex items-center gap-4 mb-3">
-                <h1
-                  style={{
-                    fontSize: "72px",
-                    fontWeight: "700",
-                    letterSpacing: "-0.02em",
-                    color: "#ffffff",
-                    fontFamily: "var(--font-headline)",
-                    lineHeight: "1.0",
-                    margin: 0,
-                  }}
-                >
+            <div
+              className="relative flex flex-1 flex-col justify-center gap-6 overflow-hidden rounded-[28px] px-8 py-10"
+              style={{
+                minHeight: "480px",
+                background: "rgba(255,255,255,0.035)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                backdropFilter: "blur(14px)",
+              }}
+            >
+              <div
+                className="pointer-events-none absolute -right-4 top-[-54px] select-none"
+                style={{
+                  fontSize: "240px",
+                  fontWeight: "900",
+                  lineHeight: 1,
+                  color: "rgba(255,255,255,0.06)",
+                  fontFamily: "var(--font-headline)",
+                }}
+              >
+                α
+              </div>
+
+              <div className="relative flex items-center gap-5">
+                <h1 className="text-7xl font-black leading-none text-white">
                   {product.name}
                 </h1>
                 {product.hasAI && (
-                  <span
-                    className="rounded-xl flex items-center justify-center"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #E75300 0%, #5B36F4 100%)",
-                      color: "#ffffff",
-                      fontSize: "20px",
-                      fontWeight: "700",
-                      padding: "8px 16px",
-                      letterSpacing: "0.5px",
-                      flexShrink: 0,
-                    }}
-                  >
+                  <span className="flex h-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#E75300] to-[#5B36F4] px-5 text-[18px] font-extrabold tracking-[0.08em] text-white shadow-[0_0_28px_rgba(231,83,0,0.35)]">
                     AI AF
                   </span>
                 )}
               </div>
-              <p
-                style={{
-                  fontSize: "28px",
-                  color: "#E75300",
-                  fontWeight: "600",
-                  marginBottom: "20px",
-                  fontFamily: "var(--font-body)",
-                  lineHeight: "1.4",
-                }}
-              >
+
+              <p className="relative max-w-[560px] text-3xl font-bold leading-snug text-[#E8B49A]">
                 {product.identity}
               </p>
-              <div className="flex flex-wrap gap-3">
-                {product.useCases.map((useCase: string, idx: number) => {
-                  const tagStyle = getTagStyle(useCase);
-                  return (
-                    <span
-                      key={idx}
-                      className="rounded-full flex items-center justify-center"
-                      style={{
-                        background: tagStyle.bg,
-                        border: `1px solid ${tagStyle.border}`,
-                        color: tagStyle.color,
-                        fontSize: "20px",
-                        fontWeight: "500",
-                        padding: "0 20px",
-                        height: "40px",
-                        fontFamily: "var(--font-body)",
-                        backdropFilter: "blur(8px)",
-                      }}
-                    >
-                      {useCase}
-                    </span>
-                  );
-                })}
+
+              <div className="relative flex flex-wrap gap-3">
+                {product.useCases.map((useCase: string, idx: number) => (
+                  <span
+                    key={idx}
+                    className="flex h-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.04] px-5 text-[18px] font-semibold text-gray-200 backdrop-blur-sm"
+                  >
+                    {useCase}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

@@ -104,7 +104,7 @@ export function ImageComparisonSlider({
             {/* After side: clipped image with afterFilter applied */}
             <div
               className="absolute inset-0"
-              style={{ clipPath: `inset(0 0 0 ${100 - sliderPosition}%)` }}
+              style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
             >
               <ImageWithFallback
                 src={afterImage}
@@ -142,7 +142,7 @@ export function ImageComparisonSlider({
             {/* After Image (Camera - Natural bokeh effect) */}
             <div
               className="absolute inset-0"
-              style={{ clipPath: `inset(0 0 0 ${100 - sliderPosition}%)` }}
+              style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
             >
               {/* Blurred background layer */}
               <div className="absolute inset-0" style={{ filter: "blur(12px)", transform: "scale(1.06)" }}>
