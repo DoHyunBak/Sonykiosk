@@ -128,7 +128,7 @@ export function LensPage() {
         muted
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 0.6 }}
+        style={{ opacity: 0.6, transform: "scale(1.15)" }}
       >
         <source src={eMountVideo} type="video/mp4" />
       </video>

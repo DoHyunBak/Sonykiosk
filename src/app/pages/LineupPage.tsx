@@ -135,7 +135,7 @@ export function LineupPage() {
         </h2>
 
         {/* 2×3 Grid */}
-        <div className="grid grid-cols-2 gap-x-[24px] gap-y-[20px] w-[1032px] place-items-center">
+        <div className="grid grid-cols-2 gap-x-[20px] gap-y-[16px] w-full place-items-center">
           {lineup.map((model) => (
             <div
               key={model.id}
@@ -144,8 +144,8 @@ export function LineupPage() {
               style={{
                 background: "#080511",
                 border: "0.667px solid rgba(255,255,255,0.5)",
-                width: "504px",
-                height: "450px"
+                width: "480px",
+                height: "460px"
               }}
             >
               {/* Product Image */}
@@ -153,7 +153,7 @@ export function LineupPage() {
                 className="relative overflow-hidden flex items-center justify-center flex-shrink-0"
                 style={{
                   background: "linear-gradient(180deg, #2c2c2c 50%, rgba(25,24,24,0.6) 100%)",
-                  height: "270px",
+                  height: "275px",
                   width: "100%"
                 }}
               >
@@ -188,7 +188,7 @@ export function LineupPage() {
               {/* Content */}
               <div
                 className="relative flex flex-col flex-shrink-0"
-                style={{ padding: "14px 16px", height: "180px", width: "100%" }}
+                style={{ padding: "14px 16px", height: "185px", width: "100%" }}
               >
                 {/* Name & Weight & Arrow */}
                 <div className="flex items-center justify-between h-[43px]">
