@@ -1,35 +1,12 @@
-import { useState, useEffect } from "react";
-import { Eye, Smile, Heart, Music, Moon } from "lucide-react";
+import { useState } from "react";
+import { Heart, Music, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import kidsVideo from "../../imports/videos/kids.mp4";
 import petVideo from "../../imports/videos/pet.mp4";
 import concertVideo from "../../imports/videos/concert.mp4";
 import nightVideo from "../../imports/videos/night.mp4";
 
 const scenarios = [
-  {
-    name: "아이",
-    icon: Smile,
-    video: kidsVideo,
-    poster: "/images/af-child-thumbnail.jpg",
-    problem: "아이가 계속 움직여서 초점이 안 맞아요",
-    fail: "셔터를 누를 때마다 초점을 다시 잡아야 합니다",
-    solution: "소니 AI 눈 AF는 아이의 눈을 자동으로 인식하고 계속 추적합니다",
-    // 아이가 좌우로 자연스럽게 움직이는 시뮬레이션 경로
-    path: [
-      { x: 50, y: 38 },
-      { x: 47, y: 37 },
-      { x: 44, y: 39 },
-      { x: 46, y: 36 },
-      { x: 50, y: 35 },
-      { x: 53, y: 37 },
-      { x: 56, y: 38 },
-      { x: 54, y: 40 },
-      { x: 51, y: 39 },
-      { x: 48, y: 38 },
-    ],
-  },
   {
     name: "반려동물",
     icon: Heart,
@@ -51,7 +28,7 @@ const scenarios = [
     ],
   },
   {
-    name: "공연",
+    name: "브이로그",
     icon: Music,
     video: concertVideo,
     poster: "/images/af-concert-thumbnail.jpg",
@@ -96,18 +73,8 @@ const scenarios = [
 
 export function AFExperiencePage() {
   const [activeTab, setActiveTab] = useState(0);
-  const [trackIdx, setTrackIdx] = useState(0);
 
   const scene = scenarios[activeTab];
-  const pos = scene.path[trackIdx];
-
-  useEffect(() => {
-    setTrackIdx(0);
-    const id = setInterval(() => {
-      setTrackIdx((p) => (p + 1) % scene.path.length);
-    }, 900);
-    return () => clearInterval(id);
-  }, [activeTab, scene.path.length]);
 
   return (
     <div
@@ -172,7 +139,7 @@ export function AFExperiencePage() {
           </h2>
 
           {/* Tab Buttons (Glassmorphic Styled) */}
-          <div className="grid grid-cols-4 gap-3 mb-6 w-full">
+          <div className="grid grid-cols-3 gap-3 mb-6 w-full">
             {scenarios.map((s, idx) => {
               const Icon = s.icon;
               const isActive = activeTab === idx;
@@ -214,94 +181,6 @@ export function AFExperiencePage() {
           </div>
         </div>
 
-        {/* Status badge & AF Tracking Frame — positioned relative to the full screen viewport */}
-        <div className="absolute inset-0 pointer-events-none w-full h-full">
-          {/* Status badge */}
-          <div
-            className="absolute rounded-xl flex items-center gap-3"
-            style={{
-              top: "220px",
-              left: "40px",
-              background: "rgba(0,0,0,0.65)",
-              backdropFilter: "blur(12px)",
-              padding: "10px 18px",
-              border: "1px solid rgba(255,255,255,0.12)",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
-            }}
-          >
-            <Eye style={{ width: "18px", height: "18px", color: "#E75300" }} />
-            <span
-              style={{
-                fontSize: "16px",
-                fontWeight: "600",
-                color: "#ffffff",
-                fontFamily: "var(--font-body)",
-              }}
-            >
-              AI Eye Tracking AF
-            </span>
-            <motion.div
-              animate={{ opacity: [1, 0.15, 1] }}
-              transition={{ duration: 1.1, repeat: Infinity }}
-              style={{
-                width: "7px",
-                height: "7px",
-                borderRadius: "50%",
-                background: "#E75300",
-                flexShrink: 0,
-              }}
-            />
-          </div>
-
-          {/* Animated AF tracking box */}
-          <motion.div
-            animate={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-            transition={{ type: "spring", stiffness: 90, damping: 18 }}
-            className="absolute"
-            style={{
-              width: "130px",
-              height: "130px",
-              marginLeft: "-65px",
-              marginTop: "-65px",
-            }}
-          >
-            {/* Corner marks */}
-            {[
-              { top: 0, left: 0, borderTop: "2px solid #E75300", borderLeft: "2px solid #E75300" },
-              { top: 0, right: 0, borderTop: "2px solid #E75300", borderRight: "2px solid #E75300" },
-              { bottom: 0, left: 0, borderBottom: "2px solid #E75300", borderLeft: "2px solid #E75300" },
-              { bottom: 0, right: 0, borderBottom: "2px solid #E75300", borderRight: "2px solid #E75300" },
-            ].map((c, i) => (
-              <div
-                key={i}
-                className="absolute"
-                style={{ ...c, width: "18px", height: "18px" }}
-              />
-            ))}
-
-            {/* Center crosshair dot */}
-            <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-              style={{ width: "5px", height: "5px", background: "#E75300" }}
-            />
-
-            {/* Label */}
-            <div
-              className="absolute -bottom-7 left-1/2 -translate-x-1/2 rounded-md whitespace-nowrap"
-              style={{
-                background: "#E75300",
-                color: "#ffffff",
-                padding: "3px 10px",
-                fontSize: "12px",
-                fontWeight: "700",
-                fontFamily: "var(--font-body)",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.35)",
-              }}
-            >
-              눈 인식 중
-            </div>
-          </motion.div>
-        </div>
       </div>
     </div>
   );

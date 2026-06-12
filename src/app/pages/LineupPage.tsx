@@ -152,7 +152,7 @@ export function LineupPage() {
               <div
                 className="relative overflow-hidden flex items-center justify-center flex-shrink-0"
                 style={{
-                  background: "linear-gradient(180deg, #2c2c2c 50%, rgba(25,24,24,0.6) 100%)",
+                  background: "#080511",
                   height: "275px",
                   width: "100%"
                 }}
@@ -160,9 +160,8 @@ export function LineupPage() {
                 <ImageWithFallback
                   src={model.image}
                   alt={model.name}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-[rgba(97,119,180,0.1)] pointer-events-none" />
                 {/* AI Badge */}
                 {model.hasAI && (
                   <div

@@ -221,46 +221,46 @@ export function IntroMenuPage() {
           {/* Row 3: 추천받기 (Full Width - Primary CTA) */}
           <button
             onClick={() => navigate(row3.path)}
-            className="group w-full rounded-[28px] flex items-center justify-between transition-all duration-300 hover:scale-[1.01]"
+            className="group w-full rounded-[32px] flex items-center justify-between transition-all duration-300 hover:scale-[1.01]"
             style={{
-              height: "317px",
+              height: "420px",
               background: "linear-gradient(163deg, #E75300 0%, #5B36F4 100%)",
               border: "none",
-              padding: "0 40px",
+              padding: "0 56px",
               flexShrink: 0,
             }}
           >
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-8">
               <div
-                className="rounded-[16px] flex items-center justify-center flex-shrink-0"
+                className="rounded-[20px] flex items-center justify-center flex-shrink-0"
                 style={{
-                  width: "72px",
-                  height: "72px",
+                  width: "96px",
+                  height: "96px",
                   background: "rgba(255,255,255,0.15)",
                   border: "1px solid rgba(255,255,255,0.25)",
                 }}
               >
                 <row3.icon
-                  style={{ width: "34px", height: "34px", color: "#ffffff" }}
+                  style={{ width: "46px", height: "46px", color: "#ffffff" }}
                 />
               </div>
               <div className="flex flex-col items-start text-left">
                 <h2
                   style={{
-                    fontSize: "44px",
+                    fontSize: "60px",
                     fontWeight: "700",
                     lineHeight: "1.3",
                     letterSpacing: "-0.02em",
                     color: "#ffffff",
                     fontFamily: "var(--font-headline)",
-                    marginBottom: "4px",
+                    marginBottom: "8px",
                   }}
                 >
                   {row3.title}
                 </h2>
                 <p
                   style={{
-                    fontSize: "24px",
+                    fontSize: "32px",
                     color: "rgba(255,255,255,0.75)",
                     fontFamily: "var(--font-body)",
                     lineHeight: "1.4",
@@ -272,7 +272,7 @@ export function IntroMenuPage() {
               </div>
             </div>
             <ChevronRight
-              style={{ width: "40px", height: "40px", color: "rgba(255,255,255,0.8)" }}
+              style={{ width: "52px", height: "52px", color: "rgba(255,255,255,0.8)" }}
             />
           </button>
         </div>

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import {
   Aperture,
-  Check,
   Plane,
   Image as ImageIcon,
   Video,
@@ -11,6 +10,7 @@ import {
   Download,
   ChevronRight,
   Sparkles,
+  Check,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -58,6 +58,7 @@ const models: Record<string, any> = {
       "여행에 최적화된 크기",
     ],
     lens: "FE 28-60mm F4-5.6",
+    mbti: { type: "ISFP", nick: "자유로운 여행자", desc: "가볍게 떠나 순간을 감성적으로 담아내는 타입" },
   },
   a7c2: {
     name: "α7C II",
@@ -69,6 +70,7 @@ const models: Record<string, any> = {
       "입문자도 쉽게 좋은 결과",
     ],
     lens: "FE 28-60mm F4-5.6",
+    mbti: { type: "ENFP", nick: "감성 브이로거", desc: "어디서든 즐겁게, AI가 알아서 초점을 잡아주는 타입" },
   },
   a7cr: {
     name: "α7CR",
@@ -80,6 +82,7 @@ const models: Record<string, any> = {
       "크롭해도 충분한 디테일",
     ],
     lens: "FE 24-70mm F2.8 GM II",
+    mbti: { type: "INTJ", nick: "디테일 완벽주의자", desc: "작은 바디에 6,100만 화소, 완벽한 디테일을 추구하는 타입" },
   },
   a7m4: {
     name: "α7 IV",
@@ -87,6 +90,7 @@ const models: Record<string, any> = {
     image: sonyA7M4,
     reasons: ["사진과 영상 모두 강력함", "33MP 고해상도", "4K 60p 영상 촬영 가능"],
     lens: "FE 24-70mm F2.8 GM II",
+    mbti: { type: "ESTJ", nick: "믿음직한 올라운더", desc: "사진·영상 무엇이든 균형 있게 해내는 만능 타입" },
   },
   a7m5: {
     name: "α7 V",
@@ -98,6 +102,7 @@ const models: Record<string, any> = {
       "최신 기술의 집약체",
     ],
     lens: "FE 24-70mm F2.8 GM II",
+    mbti: { type: "ENTP", nick: "혁신 얼리어답터", desc: "최신 AI로 한계를 시험하는 도전적인 타입" },
   },
   a7r5: {
     name: "α7R V",
@@ -109,6 +114,7 @@ const models: Record<string, any> = {
       "전문가급 성능과 내구성",
     ],
     lens: "FE 24-70mm F2.8 GM II",
+    mbti: { type: "ISTJ", nick: "고화질 장인", desc: "타협 없는 디테일로 프로의 신뢰를 받는 장인 타입" },
   },
 };
 
@@ -519,272 +525,289 @@ export function RecommendationQuizPage() {
               className="flex flex-col items-center"
             >
               <div
-                className="relative w-full max-w-[430px] overflow-hidden rounded-[30px]"
+                className="relative w-full max-w-[680px] overflow-hidden rounded-[28px]"
                 style={{
-                  background:
-                    "linear-gradient(155deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.045) 48%, rgba(5,3,9,0.28) 100%)",
-                  border: "1px solid rgba(255,255,255,0.16)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
+                  background: "linear-gradient(180deg, #14101e 0%, #0a0712 100%)",
+                  border: "1px solid rgba(255,255,255,0.1)",
                   boxShadow:
-                    "0 36px 90px rgba(0,0,0,0.58), inset 0 1px 0 rgba(255,255,255,0.18)",
+                    "0 40px 100px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)",
                 }}
               >
+                {/* 상단 액센트 라인 */}
                 <div
-                  className="absolute inset-x-6 top-[86px] h-px"
                   style={{
-                    background:
-                      "linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent)",
+                    height: "4px",
+                    background: "linear-gradient(90deg, #E75300, #5B36F4)",
                   }}
                 />
 
-                <div className="relative p-5 pb-0">
-                  <div className="flex items-center justify-between mb-4">
-                    {(() => {
-                      const profile = profiles.find((p) => p.type === selectedProfile);
-                      const Icon = profile?.icon ?? Plane;
-                      return (
-                        <div
-                          className="inline-flex items-center gap-2 rounded-full"
-                          style={{
-                            height: "38px",
-                            padding: "0 14px",
-                            background: "rgba(255,255,255,0.11)",
-                            border: "1px solid rgba(255,255,255,0.18)",
-                            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.14)",
-                          }}
-                        >
-                          <Icon
-                            style={{
-                              width: "17px",
-                              height: "17px",
-                              color: profile?.color ?? "#E75300",
-                            }}
-                          />
-                          <span
-                            style={{
-                              fontSize: "13px",
-                              fontWeight: "700",
-                              color: "rgba(255,255,255,0.9)",
-                              fontFamily: "var(--font-body)",
-                            }}
-                          >
-                            나만을 위한 추천 프로필: {selectedProfile}
-                          </span>
-                        </div>
-                      );
-                    })()}
-                    <Sparkles
+                {/* 헤더 */}
+                <div className="px-9 pt-8 pb-1">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles style={{ width: "16px", height: "16px", color: "#E75300" }} />
+                    <span
                       style={{
-                        width: "20px",
-                        height: "20px",
-                        color: "rgba(255,255,255,0.7)",
+                        fontSize: "15px",
+                        fontWeight: "700",
+                        letterSpacing: "0.06em",
+                        color: "#E75300",
+                        fontFamily: "var(--font-body)",
                       }}
-                    />
+                    >
+                      AI 추천 · {selectedProfile}
+                    </span>
                   </div>
-
-                  <div
-                    className="relative overflow-hidden rounded-[22px]"
-                    style={{
-                      minHeight: "274px",
-                      background:
-                        "linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.07) 100%)",
-                      border: "1px solid rgba(255,255,255,0.14)",
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.2)",
-                    }}
-                  >
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background:
-                          "radial-gradient(circle at 50% 18%, rgba(231,83,0,0.25), transparent 46%), radial-gradient(circle at 24% 82%, rgba(91,54,244,0.22), transparent 42%)",
-                      }}
-                    />
-                    <motion.div
-                      animate={{ y: [0, -8, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                      className="relative mx-auto flex h-[236px] w-[310px] items-center justify-center pt-4"
-                    >
-                      <ImageWithFallback
-                        src={recommendedModel.image}
-                        alt={recommendedModel.name}
-                        className="h-full w-full object-contain drop-shadow-[0_24px_36px_rgba(0,0,0,0.48)]"
-                      />
-                    </motion.div>
-
-                    <div
-                      className="absolute bottom-4 left-4 right-4 flex items-center gap-2 rounded-full"
-                      style={{
-                        minHeight: "42px",
-                        padding: "0 14px",
-                        background: "rgba(5,3,9,0.46)",
-                        border: "1px solid rgba(255,255,255,0.15)",
-                        backdropFilter: "blur(14px)",
-                      }}
-                    >
-                      <Aperture
-                        style={{ width: "16px", height: "16px", color: "#E8B49A" }}
-                      />
-                      <span
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <h3
                         style={{
-                          fontSize: "12px",
-                          color: "rgba(255,255,255,0.52)",
-                          fontFamily: "var(--font-body)",
-                          fontWeight: "600",
-                        }}
-                      >
-                        추천 렌즈
-                      </span>
-                      <span
-                        className="truncate"
-                        style={{
-                          fontSize: "15px",
+                          fontSize: "56px",
+                          fontWeight: "900",
                           color: "#ffffff",
                           fontFamily: "var(--font-headline)",
-                          fontWeight: "800",
+                          lineHeight: "1",
+                          letterSpacing: "-0.02em",
                         }}
                       >
-                        {recommendedModel.lens}
-                      </span>
+                        {recommendedModel.name}
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: "21px",
+                          color: "rgba(255,255,255,0.6)",
+                          fontFamily: "var(--font-body)",
+                          marginTop: "10px",
+                        }}
+                      >
+                        {recommendedModel.identity}
+                      </p>
                     </div>
-                  </div>
-
-                  <div className="px-1 py-5">
-                    <p
-                      style={{
-                        fontSize: "14px",
-                        color: "rgba(255,255,255,0.48)",
-                        fontFamily: "var(--font-body)",
-                        fontWeight: "700",
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        marginBottom: "4px",
-                      }}
-                    >
-                      Sony Alpha Match
-                    </p>
-                    <h3
-                      style={{
-                        fontSize: "58px",
-                        fontWeight: "900",
-                        color: "#ffffff",
-                        fontFamily: "var(--font-headline)",
-                        lineHeight: "0.95",
-                        marginBottom: "12px",
-                        textShadow: "0 10px 28px rgba(0,0,0,0.38)",
-                      }}
-                    >
-                      {recommendedModel.name}
-                    </h3>
-                    <p
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: "700",
-                        color: "#E8B49A",
-                        fontFamily: "var(--font-body)",
-                        lineHeight: "1.45",
-                        marginBottom: "18px",
-                      }}
-                    >
-                      {recommendedModel.identity}
-                    </p>
-
-                    <div className="flex flex-col gap-3">
-                      {recommendedModel.reasons.map((reason: string, idx: number) => (
-                        <div key={idx} className="flex items-center gap-3">
-                          <div
-                            className="flex items-center justify-center rounded-full"
-                            style={{
-                              width: "26px",
-                              height: "26px",
-                              background: "rgba(255,255,255,0.1)",
-                              border: "1px solid rgba(255,255,255,0.16)",
-                              flexShrink: 0,
-                            }}
-                          >
-                            <Check
-                              style={{ width: "13px", height: "13px", color: "#E75300" }}
-                            />
-                          </div>
-                          <p
-                            style={{
-                              fontSize: "17px",
-                              fontWeight: "600",
-                              color: "rgba(255,255,255,0.86)",
-                              fontFamily: "var(--font-body)",
-                              lineHeight: "1.55",
-                            }}
-                          >
-                            {reason}
-                          </p>
-                        </div>
-                      ))}
+                    <div className="flex-shrink-0 text-right">
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          color: "rgba(255,255,255,0.45)",
+                          fontWeight: "700",
+                          letterSpacing: "0.05em",
+                          fontFamily: "var(--font-body)",
+                        }}
+                      >
+                        추천 적합도
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "40px",
+                          fontWeight: "900",
+                          color: "#ffffff",
+                          fontFamily: "var(--font-headline)",
+                          lineHeight: "1",
+                          marginTop: "2px",
+                        }}
+                      >
+                        100
+                        <span style={{ fontSize: "22px", color: "#E75300" }}>%</span>
+                      </p>
                     </div>
                   </div>
                 </div>
 
+                {/* 제품 이미지 */}
                 <div
-                  className="relative mt-1 px-5 py-4"
+                  className="relative mx-9 mt-6 overflow-hidden rounded-[18px]"
                   style={{
-                    borderTop: "1px dashed rgba(255,255,255,0.26)",
-                    background: "rgba(5,3,9,0.24)",
+                    height: "420px",
+                    background:
+                      "radial-gradient(circle at 50% 35%, rgba(231,83,0,0.14), transparent 60%), linear-gradient(180deg, #1a1526 0%, #0d0a16 100%)",
+                    border: "1px solid rgba(255,255,255,0.07)",
                   }}
                 >
+                  <motion.div
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative mx-auto flex h-full w-full items-center justify-center"
+                  >
+                    <ImageWithFallback
+                      src={recommendedModel.image}
+                      alt={recommendedModel.name}
+                      className="h-full w-full object-contain drop-shadow-[0_24px_40px_rgba(0,0,0,0.5)]"
+                    />
+                  </motion.div>
+
+                  {/* 추천 렌즈 칩 */}
                   <div
-                    className="absolute -left-4 top-[-17px] h-8 w-8 rounded-full"
-                    style={{ background: "rgba(5,3,9,0.9)" }}
-                  />
-                  <div
-                    className="absolute -right-4 top-[-17px] h-8 w-8 rounded-full"
-                    style={{ background: "rgba(5,3,9,0.9)" }}
-                  />
-                  <div className="relative flex items-center justify-between gap-4">
-                    <div>
-                      <div className="mb-2 flex items-center gap-2">
-                        <Download
-                          style={{ width: "17px", height: "17px", color: "#E75300" }}
-                        />
-                        <p
-                          style={{
-                            fontSize: "17px",
-                            fontWeight: "800",
-                            color: "#ffffff",
-                            fontFamily: "var(--font-headline)",
-                          }}
-                        >
-                          휴대폰 저장
-                        </p>
-                      </div>
-                      <p
-                        style={{
-                          fontSize: "13px",
-                          color: "rgba(255,255,255,0.52)",
-                          fontFamily: "var(--font-body)",
-                          lineHeight: "1.45",
-                        }}
-                      >
-                        카메라 앱으로 스캔하세요
-                      </p>
-                    </div>
-                    <div
-                      className="flex items-center justify-center rounded-[18px]"
+                    className="absolute bottom-4 left-4 right-4 flex items-center gap-2 rounded-2xl"
+                    style={{
+                      minHeight: "48px",
+                      padding: "0 18px",
+                      background: "rgba(5,3,9,0.55)",
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      backdropFilter: "blur(14px)",
+                    }}
+                  >
+                    <Aperture style={{ width: "18px", height: "18px", color: "#E8B49A" }} />
+                    <span
                       style={{
-                        width: "96px",
-                        height: "96px",
-                        background: "#ffffff",
-                        boxShadow: "0 18px 34px rgba(0,0,0,0.35)",
-                        flexShrink: 0,
+                        fontSize: "14px",
+                        color: "rgba(255,255,255,0.5)",
+                        fontFamily: "var(--font-body)",
+                        fontWeight: "600",
                       }}
                     >
-                      <QrCode
-                        style={{ width: "62px", height: "62px", color: "#080511" }}
-                      />
+                      추천 렌즈
+                    </span>
+                    <span
+                      className="truncate"
+                      style={{
+                        fontSize: "17px",
+                        color: "#fff",
+                        fontFamily: "var(--font-headline)",
+                        fontWeight: "800",
+                        marginLeft: "auto",
+                      }}
+                    >
+                      {recommendedModel.lens}
+                    </span>
+                  </div>
+                </div>
+
+                {/* 카메라 한 줄 성격 */}
+                {recommendedModel.mbti && (
+                  <div className="px-9 pt-8">
+                    <p
+                      style={{
+                        fontSize: "15px",
+                        fontWeight: "700",
+                        color: "rgba(255,255,255,0.45)",
+                        letterSpacing: "0.06em",
+                        fontFamily: "var(--font-body)",
+                        marginBottom: "16px",
+                      }}
+                    >
+                      이 카메라는 이런 성격
+                    </p>
+                    <div
+                      className="rounded-2xl p-6"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, rgba(231,83,0,0.14), rgba(91,54,244,0.14))",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontSize: "26px",
+                          fontWeight: "800",
+                          color: "#ffffff",
+                          fontFamily: "var(--font-headline)",
+                          lineHeight: "1.2",
+                        }}
+                      >
+                        {recommendedModel.mbti.nick}
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "18px",
+                          color: "rgba(255,255,255,0.72)",
+                          fontFamily: "var(--font-body)",
+                          lineHeight: "1.5",
+                          marginTop: "8px",
+                        }}
+                      >
+                        {recommendedModel.mbti.desc}
+                      </p>
                     </div>
+                  </div>
+                )}
+
+                {/* 추천 이유 */}
+                <div className="px-9 pt-8">
+                  <p
+                    style={{
+                      fontSize: "15px",
+                      fontWeight: "700",
+                      color: "rgba(255,255,255,0.45)",
+                      letterSpacing: "0.06em",
+                      fontFamily: "var(--font-body)",
+                      marginBottom: "16px",
+                    }}
+                  >
+                    이 카메라를 추천하는 이유
+                  </p>
+                  <div className="flex flex-col gap-3">
+                    {recommendedModel.reasons.map((reason: string, i: number) => (
+                      <div key={i} className="flex items-center gap-3">
+                        <span
+                          className="flex flex-shrink-0 items-center justify-center rounded-full"
+                          style={{
+                            width: "26px",
+                            height: "26px",
+                            background: "rgba(231,83,0,0.14)",
+                            border: "1px solid rgba(231,83,0,0.4)",
+                          }}
+                        >
+                          <Check style={{ width: "15px", height: "15px", color: "#E75300" }} />
+                        </span>
+                        <span
+                          style={{
+                            fontSize: "20px",
+                            color: "rgba(255,255,255,0.88)",
+                            fontFamily: "var(--font-body)",
+                          }}
+                        >
+                          {reason}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 하단: QR 저장 */}
+                <div
+                  className="mt-8 flex items-center justify-between gap-4 px-9 py-7"
+                  style={{
+                    borderTop: "1px solid rgba(255,255,255,0.08)",
+                    background: "rgba(255,255,255,0.02)",
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <Download style={{ width: "22px", height: "22px", color: "#E75300" }} />
+                    <div>
+                      <p
+                        style={{
+                          fontSize: "18px",
+                          color: "#fff",
+                          fontWeight: "800",
+                          fontFamily: "var(--font-headline)",
+                        }}
+                      >
+                        휴대폰에 저장하기
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "14px",
+                          color: "rgba(255,255,255,0.5)",
+                          fontFamily: "var(--font-body)",
+                        }}
+                      >
+                        카메라 앱으로 QR을 스캔하세요
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    className="flex flex-shrink-0 items-center justify-center rounded-[14px]"
+                    style={{
+                      width: "92px",
+                      height: "92px",
+                      background: "#fff",
+                      boxShadow: "0 10px 24px rgba(0,0,0,0.4)",
+                    }}
+                  >
+                    <QrCode style={{ width: "64px", height: "64px", color: "#080511" }} />
                   </div>
                 </div>
               </div>
 
-              <div className="mt-5 flex w-full max-w-[720px] gap-4 flex-shrink-0">
+              <div className="mt-12 flex w-full max-w-[720px] gap-4 flex-shrink-0">
                 <button
                   onClick={() => navigate(`/product/${recommendedModelId}`)}
                   className="flex-1 rounded-2xl flex items-center justify-center transition-all hover:opacity-90"

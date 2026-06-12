@@ -1,14 +1,14 @@
 import { useState } from "react";
 import type { ElementType } from "react";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { ImageComparisonSlider } from "../components/ImageComparisonSlider";
-import { Focus, Sparkles, Maximize, Feather } from "lucide-react";
+import { SensorSizeComparison } from "../components/SensorSizeComparison";
+import { WeightComparison } from "../components/WeightComparison";
+import { Sparkles, Maximize, Feather } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
-type TabId = "bokeh" | "quality" | "sensor" | "weight";
+type TabId = "quality" | "sensor" | "weight";
 
 const tabs: Array<{ id: TabId; label: string; icon: ElementType }> = [
-  { id: "bokeh", label: "배경흐림", icon: Focus },
   { id: "quality", label: "화질", icon: Sparkles },
   { id: "sensor", label: "센서 크기", icon: Maximize },
   { id: "weight", label: "가볍고 강력", icon: Feather },
@@ -19,48 +19,35 @@ const tabData: Record<
   {
     tagline: string;
     image?: string;
+    beforeImage?: string;
     beforeLabel?: string;
     afterLabel?: string;
     beforeFilter?: string;
     afterFilter?: string;
-    bokeh?: boolean;
   }
 > = {
-  bokeh: {
-    tagline: "대구경 렌즈 + 풀프레임 센서",
-    bokeh: true,
-  },
   quality: {
     tagline: "최대 6,100만 화소 · BSI CMOS 센서",
     image:
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920",
+    // 스마트폰(before)은 저해상도 소스 → pixelated 확대로 해상도 저하 표현
+    beforeImage:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=72&w=720",
     beforeLabel: "스마트폰",
     afterLabel: "소니 α7",
-    beforeFilter: "blur(1px) saturate(0.82) contrast(0.92) brightness(0.95)",
+    beforeFilter: "saturate(0.85) contrast(0.95) brightness(0.96)",
     afterFilter: "saturate(1.15) contrast(1.06) brightness(1.01)",
   },
   sensor: {
     tagline: "풀프레임 센서 · 스마트폰 대비 약 30배 수광 면적",
-    image:
-      "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920",
-    beforeLabel: "스마트폰",
-    afterLabel: "소니 α7",
-    beforeFilter: "brightness(0.78) saturate(0.7) contrast(1.08)",
-    afterFilter: "brightness(1.08) saturate(1.15) contrast(1.03)",
   },
   weight: {
     tagline: "약 514g · 소형 바디 · 타협 없는 성능",
-    image:
-      "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920",
-    beforeLabel: "일반 DSLR",
-    afterLabel: "소니 α7",
-    beforeFilter: "saturate(0.75) contrast(0.9) brightness(0.88) hue-rotate(5deg)",
-    afterFilter: "saturate(1.2) contrast(1.07) brightness(1.03)",
   },
 };
 
 export function WhySonyPage() {
-  const [activeTab, setActiveTab] = useState<TabId>("bokeh");
+  const [activeTab, setActiveTab] = useState<TabId>("quality");
   const data = tabData[activeTab];
 
   return (
@@ -84,16 +71,17 @@ export function WhySonyPage() {
             transition={{ duration: 0.35, ease: "easeOut" }}
             className="w-full h-full"
           >
-            {data.bokeh ? (
-              <ImageComparisonSlider
-                beforeImage="https://images.unsplash.com/photo-1606794875400-320d1b5ed437?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
-                afterImage="https://images.unsplash.com/photo-1606794875400-320d1b5ed437?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
-                beforeLabel="스마트폰"
-                afterLabel="소니 α7"
+            {activeTab === "sensor" || activeTab === "weight" ? (
+              <div
+                className="w-full h-full"
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 38%, rgba(231,83,0,0.10), transparent 55%), radial-gradient(circle at 50% 100%, rgba(91,54,244,0.10), transparent 60%), #050309",
+                }}
               />
             ) : (
               <ImageComparisonSlider
-                beforeImage={data.image!}
+                beforeImage={data.beforeImage ?? data.image!}
                 afterImage={data.image!}
                 beforeLabel={data.beforeLabel!}
                 afterLabel={data.afterLabel!}
@@ -118,7 +106,7 @@ export function WhySonyPage() {
         className="h-full flex flex-col justify-start overflow-hidden relative z-20 pointer-events-none"
         style={{ padding: "56px 40px 32px" }}
       >
-        <div className="pointer-events-auto w-full flex flex-col items-center">
+        <div className="pointer-events-none w-full flex flex-col items-center flex-1 min-h-0">
           {/* Page Title / Question */}
           <h2
             style={{
@@ -136,7 +124,7 @@ export function WhySonyPage() {
           </h2>
 
           {/* Tab Buttons */}
-          <div className="grid grid-cols-4 gap-3 mb-6 w-full">
+          <div className="pointer-events-auto grid grid-cols-3 gap-3 mb-6 w-full">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -176,6 +164,20 @@ export function WhySonyPage() {
               );
             })}
           </div>
+
+          {/* 센서 크기 인터랙티브 비교 (바 없이 시각화 카드) */}
+          {activeTab === "sensor" && (
+            <div className="pointer-events-auto w-full flex-1 min-h-0">
+              <SensorSizeComparison />
+            </div>
+          )}
+
+          {/* 가볍고 강력: 무게 비교군 (카메라 ≈ 핑크 덤벨) */}
+          {activeTab === "weight" && (
+            <div className="pointer-events-auto w-full flex-1 min-h-0">
+              <WeightComparison />
+            </div>
+          )}
         </div>
       </div>
     </div>
