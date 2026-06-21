@@ -1,56 +1,25 @@
 import { useState } from "react";
-import type { ElementType } from "react";
-import { Camera, Coffee, GlassWater, CupSoda, Aperture } from "lucide-react";
+import waterImg from "../../imports/water.png";
+import cameraImg from "../../imports/sony_a7c2.png";
 
 // a7C2 고정 무게
 const A7C_WEIGHT = 514;
 
 type CompareItem = {
-  name: string; // 접시 위 표시 이름
-  btnLabel: string; // 버튼 제목
-  btnSub: string; // 버튼 부제
+  name: string;
   weight: number;
-  icon: ElementType;
-  color: string; // 아이콘/이름 색
-  boxBorder: string; // 아이콘 박스 테두리 색
+  image: string;
+  color: string;
+  boxBorder: string;
 };
 
 const items: CompareItem[] = [
   {
-    name: "스탠리 40oz (빈 컵)",
-    btnLabel: "스탠리 텀블러",
-    btnSub: "빈 컵 (40oz)",
-    weight: 635,
-    icon: Coffee,
-    color: "#d1d5db",
-    boxBorder: "#9ca3af",
-  },
-  {
     name: "생수 500ml",
-    btnLabel: "생수 한 병",
-    btnSub: "500ml 기준",
     weight: 515,
-    icon: GlassWater,
+    image: waterImg,
     color: "#60a5fa",
     boxBorder: "#3b82f6",
-  },
-  {
-    name: "벤티 아이스 커피",
-    btnLabel: "벤티 사이즈 커피",
-    btnSub: "얼음 포함",
-    weight: 590,
-    icon: CupSoda,
-    color: "#4ade80",
-    boxBorder: "#22c55e",
-  },
-  {
-    name: "구형 풀프레임 DSLR",
-    btnLabel: "일반 풀프레임",
-    btnSub: "구형 DSLR 바디",
-    weight: 890,
-    icon: Aperture,
-    color: "#f87171",
-    boxBorder: "#ef4444",
   },
 ];
 
@@ -63,7 +32,6 @@ export function WeightComparison() {
   const diff = item.weight - A7C_WEIGHT;
   const angle = Math.max(-18, Math.min(18, (diff / 400) * 18));
   const lighterByCamera = diff > 0; // 소니가 더 가벼운가
-  const CompareIcon = item.icon;
 
   const pick = (i: number) => {
     setSelected(i);
@@ -129,27 +97,11 @@ export function WeightComparison() {
           className="flex-1 relative w-full flex items-center justify-center"
           style={{ background: "radial-gradient(circle at 50% 45%, rgba(231,83,0,0.10), transparent 62%)" }}
         >
-          {/* 결과 배너 (낙하 안착 후 등장) */}
-          <div
-            key={dropId}
-            className="result-pop absolute left-1/2 z-30 flex items-center gap-2 rounded-full px-7 py-3 whitespace-nowrap"
-            style={{
-              top: "24px",
-              transform: "translateX(-50%)",
-              background: "linear-gradient(135deg, #E75300, #5B36F4)",
-              boxShadow: "0 12px 30px rgba(231,83,0,0.4)",
-              border: "1px solid rgba(255,255,255,0.2)",
-            }}
-          >
-            <span style={{ fontSize: "26px", fontWeight: 800, color: "#fff", fontFamily: "var(--font-headline)" }}>
-              {lighterByCamera
-                ? `소니 a7C2가 ${Math.round(diff)}g 더 가벼워요!`
-                : `소니 a7C2가 ${Math.round(-diff)}g 더 무거워요`}
-            </span>
-          </div>
+
+
 
           {/* 저울 구조 */}
-          <div className="relative w-[90%] max-w-[840px] h-[400px]" style={{ filter: "drop-shadow(0 26px 26px rgba(0,0,0,0.4))" }}>
+          <div className="relative w-[70%] max-w-[520px] h-[400px]" style={{ filter: "drop-shadow(0 26px 26px rgba(0,0,0,0.4))" }}>
             {/* 바닥 접지 그림자 */}
             <div
               className="absolute left-1/2 bottom-[-44px] z-0 weight-shadow"
@@ -244,13 +196,7 @@ export function WeightComparison() {
                     {/* 위에서 떨어지는 카메라 → 접시에 안착 후 떠있음 */}
                     <div className="drop-in absolute left-1/2 -translate-x-1/2" style={{ bottom: "16px", zIndex: 5 }}>
                       <div className="weight-float">
-                        <div
-                          className="relative w-24 h-24 rounded-2xl flex items-center justify-center overflow-hidden"
-                          style={{ background: "#0f1117", border: "2px solid #E75300", boxShadow: "0 14px 24px rgba(0,0,0,0.55), 0 0 28px rgba(231,83,0,0.45), inset 0 0 16px rgba(231,83,0,0.18)" }}
-                        >
-                          <Camera className="w-11 h-11 text-orange-400" />
-                          <div className="absolute inset-x-0 top-0 pointer-events-none" style={{ height: "50%", background: "linear-gradient(180deg, rgba(255,255,255,0.22), transparent)" }} />
-                        </div>
+                        <img src={cameraImg} alt="Sony a7C2" className="w-72 h-72 object-contain drop-shadow-[0_8px_20px_rgba(231,83,0,0.5)]" />
                       </div>
                     </div>
                   </div>
@@ -278,13 +224,7 @@ export function WeightComparison() {
                     <div className="weight-shadow" style={{ position: "absolute", left: "50%", top: "9px", width: "92px", height: "16px", borderRadius: "50%", background: "radial-gradient(ellipse, rgba(0,0,0,0.5), transparent 70%)" }} />
                     <div className="drop-in absolute left-1/2 -translate-x-1/2" style={{ bottom: "16px", zIndex: 5 }}>
                       <div className="weight-float">
-                        <div
-                          className="relative w-24 h-24 rounded-2xl flex items-center justify-center overflow-hidden transition-colors duration-300"
-                          style={{ background: "#11151c", border: `2px solid ${item.boxBorder}`, boxShadow: "0 14px 24px rgba(0,0,0,0.55), 0 0 26px rgba(255,255,255,0.12), inset 0 0 16px rgba(255,255,255,0.05)" }}
-                        >
-                          <CompareIcon className="w-11 h-11" style={{ color: item.color }} />
-                          <div className="absolute inset-x-0 top-0 pointer-events-none" style={{ height: "50%", background: "linear-gradient(180deg, rgba(255,255,255,0.2), transparent)" }} />
-                        </div>
+                        <img src={item.image} alt={item.name} className="w-72 h-72 object-contain drop-shadow-[0_8px_20px_rgba(96,165,250,0.5)]" />
                       </div>
                     </div>
                   </div>
@@ -296,36 +236,6 @@ export function WeightComparison() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* 하단 컨트롤 */}
-        <div
-          className="p-10 z-20"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.08)", background: "rgba(5,3,9,0.45)", backdropFilter: "blur(12px)" }}
-        >
-          <div className="grid grid-cols-4 gap-5">
-            {items.map((it, i) => {
-              const Icon = it.icon;
-              const isActive = i === selected;
-              return (
-                <button
-                  key={it.btnLabel}
-                  onClick={() => pick(i)}
-                  className="rounded-2xl p-6 flex flex-col items-center transition active:scale-95"
-                  style={{
-                    background: isActive ? "#E75300" : "rgba(5,3,9,0.6)",
-                    border: isActive ? "none" : "1px solid rgba(255,255,255,0.08)",
-                    backdropFilter: "blur(12px)",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
-                  }}
-                >
-                  <Icon className="w-10 h-10 mb-3" style={{ color: isActive ? "#ffffff" : it.color }} />
-                  <span className="text-lg font-bold text-white mb-1 text-center">{it.btnLabel}</span>
-                  <span className="text-sm text-center" style={{ color: isActive ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.45)" }}>{it.btnSub}</span>
-                </button>
-              );
-            })}
           </div>
         </div>
       </div>

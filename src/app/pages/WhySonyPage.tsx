@@ -2,16 +2,14 @@ import { useState } from "react";
 import type { ElementType } from "react";
 import { ImageComparisonSlider } from "../components/ImageComparisonSlider";
 import { SensorSizeComparison } from "../components/SensorSizeComparison";
-import { WeightComparison } from "../components/WeightComparison";
-import { Sparkles, Maximize, Feather } from "lucide-react";
+import { Sparkles, Maximize } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
-type TabId = "quality" | "sensor" | "weight";
+type TabId = "quality" | "sensor";
 
 const tabs: Array<{ id: TabId; label: string; icon: ElementType }> = [
   { id: "quality", label: "화질", icon: Sparkles },
   { id: "sensor", label: "센서 크기", icon: Maximize },
-  { id: "weight", label: "가볍고 강력", icon: Feather },
 ];
 
 const tabData: Record<
@@ -30,7 +28,6 @@ const tabData: Record<
     tagline: "최대 6,100만 화소 · BSI CMOS 센서",
     image:
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920",
-    // 스마트폰(before)은 저해상도 소스 → pixelated 확대로 해상도 저하 표현
     beforeImage:
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=72&w=720",
     beforeLabel: "스마트폰",
@@ -40,9 +37,6 @@ const tabData: Record<
   },
   sensor: {
     tagline: "풀프레임 센서 · 스마트폰 대비 약 30배 수광 면적",
-  },
-  weight: {
-    tagline: "약 514g · 소형 바디 · 타협 없는 성능",
   },
 };
 
@@ -71,7 +65,7 @@ export function WhySonyPage() {
             transition={{ duration: 0.35, ease: "easeOut" }}
             className="w-full h-full"
           >
-            {activeTab === "sensor" || activeTab === "weight" ? (
+            {activeTab === "sensor" ? (
               <div
                 className="w-full h-full"
                 style={{
@@ -124,7 +118,7 @@ export function WhySonyPage() {
           </h2>
 
           {/* Tab Buttons */}
-          <div className="pointer-events-auto grid grid-cols-3 gap-3 mb-6 w-full">
+          <div className="pointer-events-auto grid grid-cols-2 gap-3 mb-6 w-full">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -171,16 +165,8 @@ export function WhySonyPage() {
               <SensorSizeComparison />
             </div>
           )}
-
-          {/* 가볍고 강력: 무게 비교군 (카메라 ≈ 핑크 덤벨) */}
-          {activeTab === "weight" && (
-            <div className="pointer-events-auto w-full flex-1 min-h-0">
-              <WeightComparison />
-            </div>
-          )}
         </div>
       </div>
     </div>
   );
 }
-

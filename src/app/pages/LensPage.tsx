@@ -124,7 +124,6 @@ export function LensPage() {
       {/* 배경 동영상 */}
       <video
         autoPlay
-        loop
         muted
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
